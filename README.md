@@ -37,6 +37,7 @@ npm init --yes
 npm install --save-dev tsoa
 npm install --save-dev @types/node
 # npm install --save-dev tslint
+npm install
 
 tsoa routes
 npm run build
