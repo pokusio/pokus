@@ -1,7 +1,7 @@
 {
   "name": "pokus",
   "version": "0.0.1",
-  "description": "A simple Express.js app",
+  "description": "The distributed, scalable Content Manager for hugo.",
   "main": "src/main.ts",
   "dependencies": {
     "express": "^4.17.1",
@@ -17,16 +17,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/angellandros/simple-express.git"
+    "url": "git+ssh://git@github.com/Jean-Baptiste-Lasselle/pokus"
   },
   "keywords": [
     "expressjs",
     "typescript"
   ],
-  "author": "Mohammad-Ali A'RÂBI <aerabi@gmx.de>",
-  "license": "ISC",
+  "author": "Jean-Baptiste Lasselle <jean.baptiste.lasselle@gmail.com>",
+  "license": "GNU GPL v3",
   "bugs": {
-    "url": "https://github.com/angellandros/simple-express/issues"
+    "url": "https://github.com/Jean-Baptiste-Lasselle/pokus/issues"
   },
-  "homepage": "https://github.com/angellandros/simple-express#readme"
+  "homepage": "https://github.com/Jean-Baptiste-Lasselle/pokus#readme"
 }

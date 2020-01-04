@@ -1,6 +1,6 @@
 # Pokus
 
-The distributed and scalable Content Manager for hugo.
+The distributed, scalable Content Manager for hugo.
 
 `TypeScript` / `TSOA` based microservice app.
 
