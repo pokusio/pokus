@@ -31,6 +31,22 @@ npm install
 tsoa routes
 npm run build
 npm run server
+```
+* Suite au démarrage du serveur, on aura une réponse API en requêtant en GET :
+
+```bash
+# Sur [Katacoda.com] / [NodeJS] playground :
+export POKUS_API_HOSTNAME=2886795275-3000-elsy06.environments.katacoda.com
+export POKUS_API_PORT_NO=80
+curl -L -X GET http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1 | jq .
+curl -L -X GET http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/msg | jq .
+
+# Sur un envrionnement interne :
+export POKUS_API_HOSTNAME=poste-devops-typique
+export POKUS_API_PORT_NO=3000
+
+curl -X GET http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1 | jq .
+curl -X GET http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/msg | jq .
 
 ```
 
