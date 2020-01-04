@@ -8,7 +8,9 @@
     "typescript": "^3.6.4"
   },
   "devDependencies": {
-    "tslint": "^5.20.0"
+    "@types/node": "^13.1.4",
+    "tslint": "^5.20.0",
+    "tsoa": "^2.5.11"
   },
   "scripts": {
     "build": "tsc -p src",
@@ -17,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/Jean-Baptiste-Lasselle/pokus"
+    "url": "git+ssh://git@github.com/Jean-Baptiste-Lasselle/pokus.git"
   },
   "keywords": [
     "expressjs",
