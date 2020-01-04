@@ -22,9 +22,35 @@ atom .
 
 ## Brouillon: build n run
 
-### Build
+### Build : private infra
 
 ```bash
+
+npm install
+
+tsoa routes
+npm run build
+npm run server
+```
+* Suite au démarrage du serveur, on aura une réponse API en requêtant en GET :
+
+```bash
+#
+export POKUS_API_HOSTNAME=poste-devops-typique
+export POKUS_API_PORT_NO=3000
+
+curl -X GET http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1 | jq .
+curl -X GET http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/msg | jq .
+
+```
+### Build : Sur [Katacoda.com] / [NodeJS] playground
+
+```bash
+export URI_REPO=https://github.com/Jean-Baptiste-Lasselle/fwdkatacoda.git
+export WORKDIR=$(pwd)/pokus
+mkdir $WORKDIR
+git clone $URI_REPO $WORKDIR
+cd $WORKDIR
 
 npm install
 
@@ -41,14 +67,9 @@ export POKUS_API_PORT_NO=80
 curl -L -X GET http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1 | jq .
 curl -L -X GET http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/msg | jq .
 
-# Sur un envrionnement interne :
-export POKUS_API_HOSTNAME=poste-devops-typique
-export POKUS_API_PORT_NO=3000
-
-curl -X GET http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1 | jq .
-curl -X GET http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/msg | jq .
-
 ```
+
+
 
 
 ## Install
