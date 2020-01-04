@@ -25,18 +25,7 @@ atom .
 ### Build
 
 ```bash
-# Environnement de Build Global
-#
-npm install -g @types/node
-npm install -g tsoa
-# https://palantir.github.io/tslint/
-npm install -g tslint
 
-#
-npm init --yes
-npm install --save-dev tsoa
-npm install --save-dev @types/node
-# npm install --save-dev tslint
 npm install
 
 tsoa routes
