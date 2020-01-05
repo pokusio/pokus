@@ -60,18 +60,15 @@ echo " -------------------------------------------------------------------------
 
 mkdir -p $BUMBLEBEE_WORKSPACE_INSIDE_CONTAINER
 
+
+# export SSH_URI_REPO_GIT_CODE_POKUS=https://github.com/Jean-Baptiste-Lasselle/fwdkatacoda.git
 git clone $SSH_URI_REPO_GIT_CODE_POKUS $BUMBLEBEE_WORKSPACE_INSIDE_CONTAINER
-git clone $SSH_URI_REPO_GIT_CODE_HUGO $POKUS_GITOPS
 
 cd $BUMBLEBEE_WORKSPACE_INSIDE_CONTAINER
 
-export SSH_URI_REPO_GIT_CODE_POKUS=https://github.com/Jean-Baptiste-Lasselle/fwdkatacoda.git
-export WORKDIR=$(pwd)/pokus
-mkdir $WORKDIR
-git clone $URI_REPO $WORKDIR
-cd $WORKDIR
 # because we don't want this git repo to interfere with $GITOPS in the workpsace
 rm -fr ./.git/
+
 
 #
 # defines from workign directory where the
@@ -81,20 +78,12 @@ rm -fr ./.git/
 # export POKUS_UPLOADS=$BUMBLEBEE_WORKSPACE_INSIDE_CONTAINER/uploads
 # export POKUS_GITOPS=$BUMBLEBEE_WORKSPACE_INSIDE_CONTAINER/pokus
 
-
-
-# mkdir -p ~/.ssh
-# ssh-keygen -t rsa -b 4096
-# cat ~/.ssh/id_rsa.pub
-export GITOPS_REPO=https://github.com/Jean-Baptiste-Lasselle/hugoify.git
-# export GITOPS_REPO=git@github.com:Jean-Baptiste-Lasselle/hugoify.git
-
-git clone $GITOPS_REPO $POKUS_GITOPS
+git clone $SSH_URI_REPO_GIT_CODE_HUGO $POKUS_GITOPS
 
 npm install
 tsoa routes
 npm run build
-npm run server
+
 
 
 if [ $? -eq 0 ]; then
@@ -103,12 +92,13 @@ else
   echo "Bumblebee encoutered a problem Hugo building [https://pokus.$NOM_DOMAINE_SITEWEB] "
   exit 2
 fi;
-
+npm run server
+exit 0
 #
 # On pousse le commit initial sur le master, puis chaque modfication ultérieure doit respecter le git flow.
 # On protègera donc les branches par rapport aux merges, dans gitlab (ou github, ou un git service provider).
 #
-export COMMIT_MESSAGE="Livraison du build hugo du site internet [https://$NOM_DOMAINE_SITEWEB], par [$(hostname)] "
+export COMMIT_MESSAGE="Livraison du build hugo du site internet [https://pokus.$NOM_DOMAINE_SITEWEB], par [$(hostname)] "
 
 
 echo "# +++++++++++++++++++++++++++++++++++++++++++++++++++++"
