@@ -22,7 +22,7 @@ export class FilesController {
     // console.log ('J ai enregistrÃÂ© le fichier [' + pokusStorageOnDisk.file.originalname + ']');
 
 
-    return { msg: 'J ai invoquÃÂÃÂ© le endpoint upload file'};
+    return { msg: 'J ai invoque le endpoint upload file'};
   }
 
   private handleFile(request: express.Request): Promise<any> {
