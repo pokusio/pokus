@@ -8,8 +8,8 @@ import * as path from 'path';
 export class FilesController {
   wSubfolder: string;
   static wSubfolderStatic: string;
-  constructor(path) {
-    this.wSubfolder = path;
+  constructor() {
+    this.wSubfolder = "defaultSubfolderOne";
   }
   // https://scotch.io/tutorials/express-file-uploads-with-multer
   // https://stackabuse.com/handling-file-uploads-in-node-js-with-expres-and-multer/
