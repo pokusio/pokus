@@ -18,22 +18,15 @@ export class FilesController {
   @Post('uploadFile')
   public async uploadFile(@Request() request: express.Request): Promise<any> {
     this.wSubfolder = request.body.cheminFichierSousEdition;
-    FilesController.wSubfolderStatic = request.body.cheminFichierSousEdition;
-    this.testOfMine(request);
-    this.testOfMine2();
-    console.log(" Valeur request.body.cheminFichierSousEdition (juste avant appel [handleFile] ): [" + request.body.cheminFichierSousEdition + "]");
     let pokusStorageOnDisk = await this.handleFile(request, request.body.cheminFichierSousEdition);
     // file will be in request.fichierSousEdition, it is a buffer
     console.log ('J ai invoque le endpoint upload file');
+    let repertoire = request.body.cheminFichierSousEdition;
+    let fichier = request.body.fichierSousEdition;
+    console.log(" Valeur request.body.fichierSousEdition : [" + request.body.fichierSousEdition + "]");
     console.log(" Valeur request.body.cheminFichierSousEdition : [" + request.body.cheminFichierSousEdition + "]");
-    let machin = request.body.cheminFichierSousEdition;
-    console.log(" Valeur machin : [" + machin + "]");
-    this.wSubfolder = request.body.cheminFichierSousEdition;
-    this.testOfMine2();
     this.testOfMine(request);
     console.log(" Valeur this.wSubfolder : [" + this.wSubfolder + "]");
-
-
     return { msg: 'J ai invoque le endpoint upload file'};
   }
 
@@ -41,10 +34,7 @@ export class FilesController {
     console.log(" [testOfMine] Valeur request.body.cheminFichierSousEdition : [" + request.body.cheminFichierSousEdition + "]");
     console.log(" [testOfMine] Valeur FilesController.wSubfolderStatic : [" +  FilesController.wSubfolderStatic + "]");
   }
-  private testOfMine2(): Promise<any> {
-    console.log(" [testOfMine2] Valeur this.wSubfolder : [" + this.wSubfolder + "]");
-    return null;
-  }
+
   private handleFile(request: express.Request, subfolder: string): Promise<any> {
     //console.log(" TEST DU FILE ds request [" + request.file + "]");
     const theSubfolder = this.wSubfolder;
