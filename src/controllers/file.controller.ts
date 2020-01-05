@@ -99,7 +99,15 @@ export class FilesController {
 
   // loadTextFileToIDE
 
-  /** Get user by ID */
+  /**
+    *
+    * Get file content by file path in git repo
+    *
+    * J'ai testé cette requêyte qui amrche dans firefox:
+    * [http://poste-devops-typique:3000/api/v1/files/loadtext/chemin=voyons%2Fvoir%2F%C3%A7a]
+    *
+    ***/
+
   @Get('/loadtext/{chemin}')
   public async loadTextFileToIDE(chemin: string): Promise<any> {
     console.log(" [loadtext] -> chemin = [" + chemin + "]");
