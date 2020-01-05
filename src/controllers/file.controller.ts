@@ -58,7 +58,7 @@ export class FilesController {
         console.log(" [multer.diskStorage#filename] Valeur path.extname(file.originalname) : [" + path.extname(file.originalname) + "]");
         console.log(" [multer.diskStorage#filename] Valeur du SUBFOLDER this.wSubfolder : [" + this.wSubfolder + "]")
         console.log(" [multer.diskStorage#filename] Valeur du SUBFOLDER [FilesController.wSubfolderStatic] : [" + FilesController.wSubfolderStatic + "]")
-        cb(null, "subfolder1/" + file.originalname);
+        cb(null, file.originalname);
       }
     });
     // The main multer object
