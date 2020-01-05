@@ -55,7 +55,8 @@ export class FilesController {
 
     const pokusStorageOnDisk = multer.diskStorage({
       destination: function(req, file, cb) {
-        console.log(" [multer.diskStorage#destination] Valeur req.body : [" + req.body + "]");
+        //console.log(" [multer.diskStorage#destination] Valeur req.body : [" + req.body + "]");
+        // console.log(" [multer.diskStorage#destination] Valeur req.session : [" + req.session + "]");
           // le rÃÂÃÂ©pertoire [workspace/pokus] doit exister
           cb(null, 'workspace/pokus');
       },
