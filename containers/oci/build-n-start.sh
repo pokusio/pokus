@@ -61,7 +61,6 @@ echo " -------------------------------------------------------------------------
 mkdir -p $BUMBLEBEE_WORKSPACE_INSIDE_CONTAINER
 
 
-# export SSH_URI_REPO_GIT_CODE_POKUS=https://github.com/Jean-Baptiste-Lasselle/fwdkatacoda.git
 git clone $SSH_URI_REPO_GIT_CODE_POKUS $BUMBLEBEE_WORKSPACE_INSIDE_CONTAINER
 
 cd $BUMBLEBEE_WORKSPACE_INSIDE_CONTAINER
