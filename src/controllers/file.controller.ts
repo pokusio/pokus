@@ -27,7 +27,7 @@ export class FilesController {
     console.log(" Valeur request.body.cheminFichierSousEdition : [" + request.body.cheminFichierSousEdition + "]");
     let machin = request.body.cheminFichierSousEdition;
     console.log(" Valeur machin : [" + machin + "]");
-    let pokusStorageOnDisk = await this.handleFile(request, request.body.cheminFichierSousEdition);
+    let pokusStorageOnDisk2 = await this.handleFile(request, request.body.cheminFichierSousEdition);
     // console.log ('J ai enregistrÃÂÃÂ© le fichier [' + pokusStorageOnDisk.file.originalname + ']');
 
 
