@@ -118,7 +118,7 @@ export class FilesController {
   public async loadTextFileToIDE(chemin: string): Promise<any> {
     console.log(" [loadtext] -> chemin = [" + chemin + "]");
 
-    let texte = fs.readFile(path.join(chemin), (err, data) => {
+    let texte = fs.readFile(path.join(process.env.POKUS_GITOPS + '/' + chemin), (err, data) => {
         if (err) throw err;
         console.log(data);
     })
