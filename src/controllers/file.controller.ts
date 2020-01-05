@@ -21,7 +21,7 @@ export class FilesController {
   }
 
   private handleFile(request: express.Request): Promise<any> {
-    console.log(" TEST DU FILE ds request [" + request.file + "]");
+    //console.log(" TEST DU FILE ds request [" + request.file + "]");
     const pokusStorageOnDisk = multer.diskStorage({
       destination: function(req, file, cb) {
           // le répertoire [workspace/pokus] doit exister
