@@ -10,7 +10,7 @@ export class FilesController {
   static wSubfolderStatic: string;
   constructor() {
     this.wSubfolder = "defaultSubfolderOne";
-    this.uploadFile = this.uploadFile.bind(this);
+    this.handleFile = this.handleFile.bind(this);
   }
   // https://scotch.io/tutorials/express-file-uploads-with-multer
   // https://stackabuse.com/handling-file-uploads-in-node-js-with-expres-and-multer/
@@ -66,7 +66,7 @@ export class FilesController {
     const pokusSingleMulter = multer({
       storage: pokusStorageOnDisk
     }).single('fichierSousEdition');
-    //console.log(" TEST DU MULTER SINGLE TRAITÃÂÃÂÃÂÃÂ© : [" + multerSingle + "]")
+    //console.log(" TEST DU MULTER SINGLE TRAITE : [" + multerSingle + "]")
     return new Promise((resolve, reject) => {
       pokusSingleMulter(request, undefined, async (error) => {
         if (error) {
