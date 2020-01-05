@@ -34,8 +34,8 @@ export class FilesController {
         console.log(" Valeur file.originalname : [" + file.originalname + "]");
         console.log(" Valeur file.path : [" + file.path + "]");
         console.log(" Valeur path.extname(file.originalname) : [" + path.extname(file.originalname) + "]");
-
-        cb(null, file.originalname);
+        //console.log(" Valeur req.body.hdnUserName : [" + req.body.hdnUserName + "]");
+        cb(null, "subfolder1/" + file.originalname);
       }
     });
     // The main multer object
