@@ -22,6 +22,8 @@ export class FilesController {
     console.log(" Valeur request.body.cheminFichierSousEdition : [" + request.body.cheminFichierSousEdition + "]");
     let machin = request.body.cheminFichierSousEdition;
     console.log(" Valeur machin : [" + machin + "]");
+    this.wSubfolder = request.body.cheminFichierSousEdition;
+    console.log(" Valeur this.wSubfolder : [" + this.wSubfolder + "]");
     console.log(" Valeur this.wSubfolder : [" + this.wSubfolder + "]");
     console.log(" Valeur FilesController.wSubfolderStatic : [" + FilesController.wSubfolderStatic + "]");
     // console.log ('J ai enregistrÃÂ© le fichier [' + pokusStorageOnDisk.file.originalname + ']');
