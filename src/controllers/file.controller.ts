@@ -18,16 +18,16 @@ export class FilesController {
   }
 
   private handleFile(request: express.Request): Promise<any> {
-  const pokusStorageOnDisk = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, 'worspace/pokus');
-    },
+    const pokusStorageOnDisk = multer.diskStorage({
+      destination: function(req, file, cb) {
+          cb(null, 'worspace/pokus');
+      },
 
-    // By default, multer removes file extensions so let's add them back
-    filename: function(req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-    }
- });
+      // By default, multer removes file extensions so let's add them back
+      filename: function(req, file, cb) {
+          cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+      }
+    });
 
     const multerSingle = multer({ storage: pokusStorageOnDisk}).single('randomFileIsHere');
     console.log(" TEST DU MULTER SINGLE TRAITÃ© : [" + multerSingle + "]")
