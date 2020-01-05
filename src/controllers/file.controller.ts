@@ -46,7 +46,8 @@ export class FilesController {
       shell.echo("Error copying file [" + cheminCOMPLETFichierUpload + "] to [" + cheminCOMPLETFichierDansGitRepo + "]");
       shell.exit(1);
     }
-    // now let's git commit and push... ? (supposed to have a working private key public key registeredon the github account )
+
+    // now let's git commit and push... ? (assumes you have a working private key / public key pair with public key registered on the github/gitlab account )
 
     if (shell.exec("cd " + process.env.POKUS_GITOPS + " && git add --all && git commit -m 'pokus just commited ' && git push -u origin master").code !== 0) {
       // shell.echo("Error git commit n pushing file [" + cheminCOMPLETFichierUpload + "] in [" + process.env.POKUS_GITOPS + "]");
