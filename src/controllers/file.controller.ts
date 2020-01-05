@@ -13,18 +13,19 @@ export class FilesController {
   public async uploadFile(@Request() request: express.Request): Promise<any> {
     let pokusStorageOnDisk = await this.handleFile(request);
     // file will be in request.fichierSousEdition, it is a buffer
-    console.log ('J ai invoquÃ© le endpoint upload file');
-    // console.log ('J ai enregistré le fichier [' + pokusStorageOnDisk.file.originalname + ']');
+    console.log ('J ai invoque le endpoint upload file');
+    console.log(" Valeur request.body.cheminFichierSousEdition : [" + request.body.cheminFichierSousEdition + "]");
+    // console.log ('J ai enregistrÃ© le fichier [' + pokusStorageOnDisk.file.originalname + ']');
 
 
-    return { msg: 'J ai invoquÃ© le endpoint upload file'};
+    return { msg: 'J ai invoquÃÂ© le endpoint upload file'};
   }
 
   private handleFile(request: express.Request): Promise<any> {
     //console.log(" TEST DU FILE ds request [" + request.file + "]");
     const pokusStorageOnDisk = multer.diskStorage({
       destination: function(req, file, cb) {
-          // le répertoire [workspace/pokus] doit exister
+          // le rÃ©pertoire [workspace/pokus] doit exister
           cb(null, 'workspace/pokus');
       },
 
@@ -34,7 +35,7 @@ export class FilesController {
         console.log(" Valeur file.originalname : [" + file.originalname + "]");
         console.log(" Valeur file.path : [" + file.path + "]");
         console.log(" Valeur path.extname(file.originalname) : [" + path.extname(file.originalname) + "]");
-        //console.log(" Valeur req.body.hdnUserName : [" + req.body.hdnUserName + "]");
+
         cb(null, "subfolder1/" + file.originalname);
       }
     });
@@ -42,7 +43,7 @@ export class FilesController {
     const pokusSingleMulter = multer({
       storage: pokusStorageOnDisk}
     ).single('fichierSousEdition');
-    //console.log(" TEST DU MULTER SINGLE TRAITÃ© : [" + multerSingle + "]")
+    //console.log(" TEST DU MULTER SINGLE TRAITÃÂ© : [" + multerSingle + "]")
     return new Promise((resolve, reject) => {
       pokusSingleMulter(request, undefined, async (error) => {
         if (error) {
