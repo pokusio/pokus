@@ -19,7 +19,6 @@ export class FilesController {
     FilesController.wSubfolderStatic=request.body.cheminFichierSousEdition;
     this.testOfMine(request);
     this.testOfMine2();
-
     let pokusStorageOnDisk = await this.handleFile(request);
     // file will be in request.fichierSousEdition, it is a buffer
     console.log ('J ai invoque le endpoint upload file');
@@ -27,20 +26,21 @@ export class FilesController {
     let machin = request.body.cheminFichierSousEdition;
     console.log(" Valeur machin : [" + machin + "]");
     this.wSubfolder = request.body.cheminFichierSousEdition;
-    console.log(" Valeur this.wSubfolder : [" + this.wSubfolder + "]");
+    this.testOfMine2();
     console.log(" Valeur this.wSubfolder : [" + this.wSubfolder + "]");
     console.log(" Valeur FilesController.wSubfolderStatic : [" + FilesController.wSubfolderStatic + "]");
-    // console.log ('J ai enregistrÃÂ© le fichier [' + pokusStorageOnDisk.file.originalname + ']');
+    // console.log ('J ai enregistrÃÂÃÂ© le fichier [' + pokusStorageOnDisk.file.originalname + ']');
 
 
     return { msg: 'J ai invoque le endpoint upload file'};
   }
   private testOfMine(request: express.Request): void {
     console.log(" [testOfMine] Valeur request.body.cheminFichierSousEdition : [" + request.body.cheminFichierSousEdition + "]");
-    console.log(" [testOfMine] Valeur this.wSubfolder : [" + this.wSubfolder + "]");
+    console.log(" [testOfMine] Valeur FilesController.wSubfolderStatic : [" +  FilesController.wSubfolderStatic + "]");
   }
   private testOfMine2() {
     console.log(" [testOfMine2] Valeur this.wSubfolder : [" + this.wSubfolder + "]");
+    console.log(" [testOfMine2] Valeur FilesController.wSubfolderStatic : [" + FilesController.wSubfolderStatic + "]");
   }
   private handleFile(request: express.Request): Promise<any> {
     //console.log(" TEST DU FILE ds request [" + request.file + "]");
@@ -50,7 +50,7 @@ export class FilesController {
 
     const pokusStorageOnDisk = multer.diskStorage({
       destination: function(req, file, cb) {
-          // le rÃÂ©pertoire [workspace/pokus] doit exister
+          // le rÃÂÃÂ©pertoire [workspace/pokus] doit exister
           cb(null, 'workspace/pokus');
       },
 
@@ -69,7 +69,7 @@ export class FilesController {
     const pokusSingleMulter = multer({
       storage: pokusStorageOnDisk}
     ).single('fichierSousEdition');
-    //console.log(" TEST DU MULTER SINGLE TRAITÃÂÃÂ© : [" + multerSingle + "]")
+    //console.log(" TEST DU MULTER SINGLE TRAITÃÂÃÂÃÂÃÂ© : [" + multerSingle + "]")
     return new Promise((resolve, reject) => {
       pokusSingleMulter(request, undefined, async (error) => {
         if (error) {
