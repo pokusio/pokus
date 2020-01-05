@@ -105,12 +105,18 @@ export class FilesController {
     *
     * J'ai testé cette requêyte qui amrche dans firefox:
     * [http://poste-devops-typique:3000/api/v1/files/loadtext/chemin=voyons%2Fvoir%2F%C3%A7a]
+    * -----------------------------------------------------------
+    * => après avoir créé le fichier en exécutant la commande :
+    * [curl -L -X POST -F 'fichierSousEdition=@"./ptitestespace/autrefichier.pokus"'  -F 'cheminRepoGitFichierSousEdition="ptitestespace/rep1/rep2/reTTT/autrefichier.pokus"' http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/files/uploadFile | jq .]
+    * => on devra pouvoir charger le contenu texte de ce fichier avec :
+    * [http://poste-devops-typique:3000/api/v1/files/loadtext/chemin=ptitestespace%2Frep1%2Frep2%2FreTTT%2Fautrefichier.pokus]
     *
     ***/
 
   @Get('/loadtext/{chemin}')
   public async loadTextFileToIDE(chemin: string): Promise<any> {
     console.log(" [loadtext] -> chemin = [" + chemin + "]");
+    // Ici je dois juste charger le contenu texte du fichier
     return {
       msg: 'Réponse au Endpoint [/loadtext]',
       texte: chemin
