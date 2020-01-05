@@ -9,7 +9,8 @@ export class FilesController {
   public async uploadFile(@Request() request: express.Request): Promise<any> {
     await this.handleFile(request);
     // file will be in request.randomFileIsHere, it is a buffer
-    return {};
+    console.log ('J ai invoqué le endpoint upload file');
+    return { msg: 'J ai invoqué le endpoint upload file'};
   }
 
   private handleFile(request: express.Request): Promise<any> {
