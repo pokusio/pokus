@@ -33,7 +33,7 @@ export class FilesController {
         console.log(" Valeur chopee : [" + file.fieldname + '-' + Date.now() + path.extname(file.originalname) + "]");
         console.log(" Valeur file.originalname : [" + file.originalname + "]");
         console.log(" Valeur path.extname(file.originalname) : [" + path.extname(file.originalname) + "]");
-        cb(null, file.fieldname + path.extname(file.originalname));
+        cb(null, file.originalname + path.extname(file.originalname));
       }
     });
     // file will be in request.fichierSousEdition, it is a buffer
