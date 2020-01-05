@@ -49,8 +49,9 @@ export class FilesController {
     // now let's git commit and push... ? (supposed to have a working private key public key registeredon the github account )
 
     if (shell.exec("cd " + process.env.POKUS_GITOPS + " && git add --all && git commit -m 'pokus just commited ' && git push -u origin master").code !== 0) {
-      shell.echo("Error git commit n pushing file [" + cheminCOMPLETFichierUpload + "] in [" + process.env.POKUS_GITOPS + "]");
-      shell.exit(1);
+      // shell.echo("Error git commit n pushing file [" + cheminCOMPLETFichierUpload + "] in [" + process.env.POKUS_GITOPS + "]");
+      console.log("Error git commit n pushing file [" + cheminCOMPLETFichierUpload + "] in [" + process.env.POKUS_GITOPS + "]");
+      // shell.exit(1);
     }
     /**/
 
