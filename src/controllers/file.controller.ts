@@ -23,11 +23,15 @@ export class FilesController {
     console.log ('J ai invoque le endpoint upload file');
     let cheminFichierDansGitRepoPre = request.body.cheminFichierSousEdition;
     let cheminFichierDansGitRepo = cheminFichierDansGitRepoPre.replace(/"/g,'');
+    let cheminCOMPLETFichierDansGitRepo =  process.env.POKUS_GITOPS + '/' + cheminFichierDansGitRepo;
+
     console.log(" Valeur [request.body.cheminFichierSousEdition] = [" + request.body.cheminFichierSousEdition + "]");
     console.log(" Valeur [cheminFichierDansGitRepo] = [" + cheminFichierDansGitRepo + "]");
+    console.log(" Valeur [cheminCOMPLETFichierDansGitRepo] = [" + cheminCOMPLETFichierDansGitRepo + "]");
+
     console.log( "  Valeur de [process.env.POKUS_WKSP] = [" + process.env.POKUS_WKSP + "]");
     console.log( "  Valeur de [process.env.POKUS_UPLOADS] = [" + process.env.POKUS_UPLOADS + "]");
-    console.log( "  Valeur de [process.env.POKUS_UPLOADS] = [" + process.env.POKUS_GITOPS + "]");
+    console.log( "  Valeur de [process.env.POKUS_GITOPS] = [" + process.env.POKUS_GITOPS + "]");
     return { msg: 'J ai invoque le endpoint upload file', cheminFichierDansGitRepo: cheminFichierDansGitRepo };
   }
 
