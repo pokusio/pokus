@@ -1,0 +1,77 @@
+version: '3'
+#
+# Le pipeline comporte des tasks et des workers.
+# Ce [docker-compose.yml] comprend uniquement les "workers", de ce pipeline :
+#  => il sont exécutés par des `ansible-playbook`, exécutés dans des conteneurs définies dans le [docker-compose.flow.yml]
+#  => Ces `ansible-playbook`, exécutés, se connectent en `SSH` sur l'hôte Docker Compose où sont installés les _"workers"_, définis dans le présent [docker-compose.yml], l'hôte réseau `$PIPELINE_SERVICE_SSH_SERVICE_HOSTNAME`.
+#  => Cet `ansible-playbook` exécutent les _"workers"_ définis dans ce [docker-compose.yml], dans lesquels sont exfcutées les tâches suivantes :
+#            + exécuter une nouvelle tâche de build, ou de test, de l'application
+#              ([hugo buld --production], par ex.).
+#            + pousser le résultat des tests ou du builds est poussé sur la branche
+#              "pipeline-execution-${PIPELINE_EXECUTION_ID}" du repo
+#               git `$SSH_URI_TO_PIPELINE_DNA`.
+#            + `$SSH_URI_TO_PIPELINE_DNA` a été git cloné dans `$BUMBLEBEE_HOME_INSIDE_CONTAINER/dna`
+#            + Si ce sont des tests, tous les résutlats de
+#              ces tests doivent être persistés dans le conteneur, dans
+#              un ensemble de fichiers et répertoires, tous contenus dans le répertoire "$BUMBLEBEE_HOME_INSIDE_CONTAINER/dna/tests.results/${PIPELINE_EXECUTION_ID}/${PIPELINE_STEP_ID}"
+#              pour être versionnés dans le repo git "`$SSH_URI_TO_PIPELINE_DNA`",
+#              Ainsi est mis à disposition du prochain "BUILD_STEP" de pipeline, la dernière production du build.
+#
+#
+#  NOTEZ :
+#        chaque "BUILD_STEP" délenche un "TEST_STEP", et à chaque "TEST_STEP",est régénéré le site web hugo qui publie tous les résultats de tous les tests, avec une page dédiée aux résultats de cette session de tests, et un historique et possibilité de comparaison avec les autres sessions (page de résultats de tests). Il y a un dashboard overview de tous les tests exécutés dans cete session de pipeline, et une possibilité de comparaison à l'historique des sessions précédentes, persistées dans une base de données (au moins le `git` du code hugo du "pipeline continuous testing dashboard").
+#  De plus, pour chaque "TEST_STEP", une option "EXIT_ON_FAILURE" (case à cocher), permet d'interrompre l'exécution du pipeline, si un seul test unitaire a échoué. Ou si les résultats de tests ont plus d'un certain nombre de tests unitaires avec pour résultat un échec ("KO").
+#
+#
+#  [docker-compose.flow.yml]
+#  nouvelle variable au centre du pipeline : SSH_URI_TO_PIPELINE_DNA
+#
+#  => build hugo, commit n push to DNA
+#  => déploiement local, en faisant le [docker build] puis, [docker push], et enfin [docker pull] et [docker-compose up -d]
+#  => tests avant déploiement hugo, entre chaque étape de build
+#  => [integration-tests] après déploiement hugo,
+#
+services:
+  build_hugo:
+    hostname: 'jblass3ll3.world.hugo-build.pokusio.io'
+    container_name: "jblass3ll3.world.hugo-build.pokusiuo.io"
+    image: docker.pokusio.io/jblass3ll3.world/hugo-build:0.0.1
+    build:
+      context: oci/
+      args:
+        - BUMBLEBEE_HOME_INSIDE_CONTAINER=$BUMBLEBEE_HOME_INSIDE_CONTAINER
+        - HUGO_VERSION=$HUGO_VERSION
+    environment:
+      - PIPELINE_GIT_SERVICE_PROVIDER_HOSTNAME=$PIPELINE_GIT_SERVICE_PROVIDER_HOSTNAME
+      - BUMBLEBEE_HOME_INSIDE_CONTAINER=$BUMBLEBEE_HOME_INSIDE_CONTAINER
+      # + ccc
+      - BUMBLEBEE_SSH_PRIVATE_KEY_FILENAME=$BUMBLEBEE_SSH_PRIVATE_KEY_FILENAME
+      # + The parameters needed to generate the new [https://gohugo.io] project
+      # The repo where the pipline workers push their work, steaps after tasks.
+      - SSH_URI_REPO_GIT_CODE_HUGO=$SSH_URI_REPO_GIT_CODE_HUGO
+      - NOM_DOMAINE_SITEWEB=$NOM_DOMAINE_SITEWEB
+      - BUMBLEBEE_GIT_SSH_COMMAND=$BUMBLEBEE_GIT_SSH_COMMAND
+    volumes:
+      - $BUMBLEBEE_SECRET_VAULT_OUTSIDE_CONTAINER:$BUMBLEBEE_HOME_INSIDE_CONTAINER/.secrets:rw
+    networks:
+      - pipeline_hugo
+    # ---------------------------------------------
+    # [docker [run|exec] -it ...]
+    # stdinURI_DWNLD_STARTER_EXAMPLE_CONFIG
+    stdin_open:       true
+    # stdout
+    tty:              true
+    # ---------------------------------------------
+    # restart: always
+    restart: 'no'
+    healthcheck:
+      test: ["CMD", "$BUMBLEBEE_HOME_INSIDE_CONTAINER/pipeline-step.healthcheck.sh"]
+      interval: 5s
+      timeout: 10s
+      retries: 30
+      # start_period: 60s
+
+
+networks:
+  pipeline_hugo:
+    driver: bridge
