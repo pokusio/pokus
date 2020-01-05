@@ -16,7 +16,7 @@ export class FilesController {
   }
 
   private handleFile(request: express.Request): Promise<any> {
-    const multerSingle = multer().single('randomFileIsHere');
+    const multerSingle = multer({ storage: pokusStorageOnDisk}).single('randomFileIsHere');
     console.log(" TEST DU MULTER SINGLE TRAITé : [" + multerSingle + "]")
     return new Promise((resolve, reject) => {
       multerSingle(request, undefined, async (error) => {

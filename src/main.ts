@@ -10,9 +10,9 @@ const port = 3000;
 
 
 
-const storage = multer.diskStorage({
+const pokusStorageOnDisk = multer.diskStorage({
     destination: function(req, file, cb) {
-        cb(null, 'uploads/');
+        cb(null, 'worspace/pokus');
     },
 
     // By default, multer removes file extensions so let's add them back
