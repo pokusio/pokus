@@ -65,11 +65,11 @@ mkdir -p $POKUS_WKSP
 mkdir -p $POKUS_UPLOADS
 mkdir -p $POKUS_GITOPS
 
-
-ssh-keygen -t rsa -b 4096
-cat ~/.ssh/id_rsa.pub
-# export GITOPS_REPO=https://github.com/Jean-Baptiste-Lasselle/hugoify.git
-export GITOPS_REPO=git@github.com:Jean-Baptiste-Lasselle/hugoify.git
+# mkdir -p ~/.ssh
+# ssh-keygen -t rsa -b 4096
+# cat ~/.ssh/id_rsa.pub
+export GITOPS_REPO=https://github.com/Jean-Baptiste-Lasselle/hugoify.git
+# export GITOPS_REPO=git@github.com:Jean-Baptiste-Lasselle/hugoify.git
 
 git clone $GITOPS_REPO $POKUS_GITOPS
 
