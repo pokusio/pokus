@@ -56,7 +56,13 @@ npm install
 
 tsoa routes
 npm run build
+#
+# defines from workign directory where the
+# files are going to be uploaded.
+# 
+export POKUS_WKSP=workspace/pokus
 npm run server
+
 ```
 * Suite au démarrage du serveur, on aura une réponse API en requêtant en GET :
 
