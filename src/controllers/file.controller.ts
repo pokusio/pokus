@@ -21,43 +21,30 @@ export class FilesController {
     let pokusStorageOnDisk = await this.handleFile(request, request.body.cheminFichierSousEdition);
     // file will be in request.fichierSousEdition, it is a buffer
     console.log ('J ai invoque le endpoint upload file');
-    let repertoire = request.body.cheminFichierSousEdition;
-    let fichier = request.body.fichierSousEdition;
+    let cheminFichierDansGitRepo = request.body.cheminFichierSousEdition;
     console.log(" Valeur [request.body.cheminFichierSousEdition] = [" + request.body.cheminFichierSousEdition + "]");
-    console.log( "  Valeur de [process.env.POKUS_WKSP] = [" + process.env.POKUS_WKSP + "]")
-    return { msg: 'J ai invoque le endpoint upload file'};
-  }
-
-  private testOfMine(request: express.Request): void {
-    console.log(" [testOfMine] Valeur request.body.cheminFichierSousEdition : [" + request.body.cheminFichierSousEdition + "]");
-    console.log(" [testOfMine] Valeur FilesController.wSubfolderStatic : [" +  FilesController.wSubfolderStatic + "]");
+    console.log( "  Valeur de [process.env.POKUS_WKSP] = [" + process.env.POKUS_WKSP + "]");
+    console.log( "  Valeur de [process.env.POKUS_UPLOADS] = [" + process.env.POKUS_UPLOADS + "]");
+    console.log( "  Valeur de [process.env.POKUS_UPLOADS] = [" + process.env.POKUS_GITOPS + "]");
+    return { msg: 'J ai invoque le endpoint upload file', cheminFichierDansGitRepo: cheminFichierDansGitRepo};
   }
 
   private handleFile(request: express.Request, subfolder: string): Promise<any> {
-    //console.log(" TEST DU FILE ds request [" + request.file + "]");
-    const theSubfolder = this.wSubfolder;
-    console.log(" [handleFile] Valeur request.body.cheminFichierSousEdition : [" + request.body.cheminFichierSousEdition + "]");
-    console.log(" [handleFile] Valeur theSubfolder : [" + theSubfolder + "]");
-    console.log(" [handleFile] Valeur du param subfolder : [" + subfolder + "]");
-
 
     const pokusStorageOnDisk = multer.diskStorage({
       destination: function(req, file, cb) {
         //console.log(" [multer.diskStorage#destination] Valeur req.body : [" + req.body + "]");
         // console.log(" [multer.diskStorage#destination] Valeur req.session : [" + req.session + "]");
-          // le rÃÂÃÂ©pertoire [workspace/pokus] doit exister
-          console.log(" ++ [" + process.env.POKUS_WKSP + "] decide du chemin du workspace par config : ");
-          cb(null, process.env.POKUS_WKSP);
+          // le repertoire [process.Env.POKUS_UPLOADS] doit exister
+          console.log(" ++ [" + process.env.POKUS_UPLOADS + "] decide du chemin du workspace par config : ");
+          cb(null, process.env.POKUS_UPLOADS);
       },
 
       // By default, multer removes file extensions so let's add them back
       filename: function(req, file, cb) {
-        console.log(" [multer.diskStorage#filename] Valeur chopee : [" + file.fieldname + '-' + Date.now() + path.extname(file.originalname) + "]");
-        console.log(" [multer.diskStorage#filename] Valeur file.originalname : [" + file.originalname + "]");
-        // console.log(" Valeur [req.body.cheminFichierSousEdition] : [" + req.body.cheminFichierSousEdition + "]");
-        console.log(" [multer.diskStorage#filename] Valeur path.extname(file.originalname) : [" + path.extname(file.originalname) + "]");
-        console.log(" [multer.diskStorage#filename] Valeur du SUBFOLDER this.wSubfolder : [" + this.wSubfolder + "]")
-        console.log(" [multer.diskStorage#filename] Valeur du SUBFOLDER [FilesController.wSubfolderStatic] : [" + FilesController.wSubfolderStatic + "]")
+        // console.log(" [multer.diskStorage#filename] Valeur generee : [" + file.fieldname + '-' + Date.now() + path.extname(file.originalname) + "]");
+        // console.log(" [multer.diskStorage#filename] Valeur file.originalname : [" + file.originalname + "]");
+        // console.log(" [multer.diskStorage#filename] Valeur path.extname(file.originalname) : [" + path.extname(file.originalname) + "]");
         cb(null, file.originalname);
       }
     });

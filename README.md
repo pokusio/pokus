@@ -51,7 +51,8 @@ export WORKDIR=$(pwd)/pokus
 mkdir $WORKDIR
 git clone $URI_REPO $WORKDIR
 cd $WORKDIR
-
+# because we don't want this git repo to interfere with $GITOPS in the workpsace
+rm -fr ./.git/
 npm install
 
 tsoa routes
@@ -59,8 +60,16 @@ npm run build
 #
 # defines from workign directory where the
 # files are going to be uploaded.
-# 
-export POKUS_WKSP=workspace/pokus
+#
+export POKUS_WKSP=$(pwd)/workspace
+export POKUS_UPLOADS=$POKUS_WKSP/uploads
+export POKUS_GITOPS=$POKUS_WKSP/pokus
+mkdir -p $POKUS_WKSP
+mkdir -p $POKUS_UPLOADS
+mkdir -p $POKUS_GITOPS
+
+git clone https://github.com/Jean-Baptiste-Lasselle/hugoify.git $POKUS_GITOPS
+
 npm run server
 
 ```
