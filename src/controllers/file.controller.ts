@@ -32,35 +32,11 @@ export class FilesController {
     this.testOfMine2();
     this.testOfMine(request);
     console.log(" Valeur this.wSubfolder : [" + this.wSubfolder + "]");
-    // console.log ('J ai enregistrÃÂÃÂ© le fichier [' + pokusStorageOnDisk.file.originalname + ']');
 
 
     return { msg: 'J ai invoque le endpoint upload file'};
   }
-  /**
-   * Just to keep the implementation that works
-   */
-  private async uploadFilePREVIOUS(@Request() request: express.Request): Promise<any> {
-    this.wSubfolder = request.body.cheminFichierSousEdition;
-    FilesController.wSubfolderStatic = request.body.cheminFichierSousEdition;
-    this.testOfMine(request);
-    this.testOfMine2();
-    console.log(" Valeur request.body.cheminFichierSousEdition (juste avant appel [handleFile] ): [" + request.body.cheminFichierSousEdition + "]");
-    let pokusStorageOnDisk = await this.handleFile(request, request.body.cheminFichierSousEdition);
-    // file will be in request.fichierSousEdition, it is a buffer
-    console.log ('J ai invoque le endpoint upload file');
-    console.log(" Valeur request.body.cheminFichierSousEdition : [" + request.body.cheminFichierSousEdition + "]");
-    let machin = request.body.cheminFichierSousEdition;
-    console.log(" Valeur machin : [" + machin + "]");
-    this.wSubfolder = request.body.cheminFichierSousEdition;
-    this.testOfMine2();
-    this.testOfMine(request);
-    console.log(" Valeur this.wSubfolder : [" + this.wSubfolder + "]");
-    // console.log ('J ai enregistrÃÂÃÂ© le fichier [' + pokusStorageOnDisk.file.originalname + ']');
 
-
-    return { msg: 'J ai invoque le endpoint upload file'};
-  }
   private testOfMine(request: express.Request): void {
     console.log(" [testOfMine] Valeur request.body.cheminFichierSousEdition : [" + request.body.cheminFichierSousEdition + "]");
     console.log(" [testOfMine] Valeur FilesController.wSubfolderStatic : [" +  FilesController.wSubfolderStatic + "]");
@@ -79,6 +55,7 @@ export class FilesController {
 
     const pokusStorageOnDisk = multer.diskStorage({
       destination: function(req, file, cb) {
+        console.log(" [multer.diskStorage#destination] Valeur req : [" + req + "]");
           // le rÃÂÃÂ©pertoire [workspace/pokus] doit exister
           cb(null, 'workspace/pokus');
       },
