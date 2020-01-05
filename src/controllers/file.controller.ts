@@ -19,11 +19,11 @@ export class FilesController {
   // https://symmetrycode.com/super-easy-image-uploads-with-multer-and-express/
   @Post('uploadFile')
   public async uploadFile(@Request() request: express.Request): Promise<any> {
-    this.wSubfolder = request.body.cheminFichierSousEdition;
-    let pokusStorageOnDisk = await this.handleFile(request, request.body.cheminFichierSousEdition);
+
+    let pokusStorageOnDisk = await this.handleFile(request, request.body.cheminRepoGitFichierSousEdition);
     // file will be in request.fichierSousEdition, it is a buffer
     console.log ('J ai invoque le endpoint upload file');
-    let cheminFichierDansGitRepoPre = request.body.cheminFichierSousEdition;
+    let cheminFichierDansGitRepoPre = request.body.cheminRepoGitFichierSousEdition;
     let cheminFichierDansGitRepo = cheminFichierDansGitRepoPre.replace(/"/g,'');
     let cheminCOMPLETFichierDansGitRepo = process.env.POKUS_GITOPS + '/' + cheminFichierDansGitRepo;
     let cheminCOMPLETFichierUpload = process.env.POKUS_UPLOADS + '/' + cheminFichierDansGitRepo.split('/').pop();
@@ -53,7 +53,7 @@ export class FilesController {
       shell.exit(1);
     }
     */
-    
+
     console.log( "  Valeur de [process.env.POKUS_WKSP] = [" + process.env.POKUS_WKSP + "]");
     console.log( "  Valeur de [process.env.POKUS_UPLOADS] = [" + process.env.POKUS_UPLOADS + "]");
     console.log( "  Valeur de [process.env.POKUS_GITOPS] = [" + process.env.POKUS_GITOPS + "]");
