@@ -105,7 +105,7 @@ export class FilesController {
     console.log(" [loadtext] -> chemin = [" + chemin + "]");
     return {
       msg: 'Réponse au Endpoint [/loadtext]',
-      texte: "test loadtext"
+      texte: chemin
     };
   }
 }
