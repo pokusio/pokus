@@ -4,7 +4,7 @@ import * as multer from 'multer';
 
 @Route('files')
 export class FilesController {
-  
+
   // https://scotch.io/tutorials/express-file-uploads-with-multer
   @Post('uploadFile')
   public async uploadFile(@Request() request: express.Request): Promise<any> {
@@ -16,6 +16,7 @@ export class FilesController {
 
   private handleFile(request: express.Request): Promise<any> {
     const multerSingle = multer().single('randomFileIsHere');
+    console.log(" TEST DU MULTER SINGLE TRAITé : [" + multerSingle + "]")
     return new Promise((resolve, reject) => {
       multerSingle(request, undefined, async (error) => {
         if (error) {
