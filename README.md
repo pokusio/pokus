@@ -64,8 +64,19 @@ npm run server
 # Sur [Katacoda.com] / [NodeJS] playground :
 export POKUS_API_HOSTNAME=2886795275-3000-elsy06.environments.katacoda.com
 export POKUS_API_PORT_NO=80
+
+#
+# Invocation du endpoint /
+#
 curl -L -X GET http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1 | jq .
+
+#
+# Invocation du endpoint /msg
 curl -L -X GET http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/msg | jq .
+
+#
+# Invocation du endpoint /files/uploadFile
+curl -L -X POST --data '{voila: 53}'  http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/files/uploadFile
 
 ```
 
