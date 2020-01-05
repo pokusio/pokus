@@ -31,7 +31,6 @@ export class FilesController {
     this.testOfMine2();
     this.testOfMine(request);
     console.log(" Valeur this.wSubfolder : [" + this.wSubfolder + "]");
-    console.log(" Valeur FilesController.wSubfolderStatic : [" + FilesController.wSubfolderStatic + "]");
     // console.log ('J ai enregistrÃÂÃÂ© le fichier [' + pokusStorageOnDisk.file.originalname + ']');
 
 
@@ -41,9 +40,9 @@ export class FilesController {
     console.log(" [testOfMine] Valeur request.body.cheminFichierSousEdition : [" + request.body.cheminFichierSousEdition + "]");
     console.log(" [testOfMine] Valeur FilesController.wSubfolderStatic : [" +  FilesController.wSubfolderStatic + "]");
   }
-  private testOfMine2() {
+  private testOfMine2(): Promise<any> {
     console.log(" [testOfMine2] Valeur this.wSubfolder : [" + this.wSubfolder + "]");
-    console.log(" [testOfMine2] Valeur FilesController.wSubfolderStatic : [" + FilesController.wSubfolderStatic + "]");
+    return null;
   }
   private handleFile(request: express.Request, subfolder: string): Promise<any> {
     //console.log(" TEST DU FILE ds request [" + request.file + "]");
