@@ -6,6 +6,7 @@ import * as multer from 'multer';
 export class FilesController {
 
   // https://scotch.io/tutorials/express-file-uploads-with-multer
+  // https://stackabuse.com/handling-file-uploads-in-node-js-with-expres-and-multer/
   @Post('uploadFile')
   public async uploadFile(@Request() request: express.Request): Promise<any> {
     await this.handleFile(request);

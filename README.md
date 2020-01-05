@@ -77,7 +77,22 @@ curl -L -X GET http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/msg | jq .
 #
 # Invocation du endpoint /files/uploadFile
 curl -L -X POST --data '{voila: 53}'  http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/files/uploadFile
+```
+* Invocation testée du endpoint `api/v1/files/uploadFile` :
 
+```bash
+jibl@poste-devops-jbl-16gbram:~/pokus.dev$ curl -L -X POST --data '{randomFileIsHere: "./machin"}' --data-binary "@./randomFileIsHere" -H 'content-type: application/x-www-form-urlencoded' http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/files/uploadFile
+Warning: Couldn't read data from file "./randomFileIsHere", this makes an
+Warning: empty POST.
+{"msg":"J ai invoqué le endpoint upload file"}jibl@poste-devops-jbl-16gbram:~/pokus.dev$
+jibl@poste-devops-jbl-16gbram:~/pokus.dev$
+jibl@poste-devops-jbl-16gbram:~/pokus.dev$ cat machin.pokus
+j'ai compris
+jibl@poste-devops-jbl-16gbram:~/pokus.dev$ cp machin.pokus ./randomFileIsHere
+jibl@poste-devops-jbl-16gbram:~/pokus.dev$ cat ./randomFileIsHere
+j'ai compris
+jibl@poste-devops-jbl-16gbram:~/pokus.dev$ curl -L -X POST --data '{randomFileIsHere: "./machin"}' --data-binary "@./randomFileIsHere" -H 'content-type: application/x-www-form-urlencoded' http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/files/uploadFile
+{"msg":"J ai invoqué le endpoint upload file"}
 ```
 
 
