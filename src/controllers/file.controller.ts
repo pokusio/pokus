@@ -23,10 +23,8 @@ export class FilesController {
     console.log ('J ai invoque le endpoint upload file');
     let repertoire = request.body.cheminFichierSousEdition;
     let fichier = request.body.fichierSousEdition;
-    console.log(" Valeur request.body.fichierSousEdition : [" + request.body.fichierSousEdition + "]");
     console.log(" Valeur request.body.cheminFichierSousEdition : [" + request.body.cheminFichierSousEdition + "]");
     this.testOfMine(request);
-    console.log(" Valeur this.wSubfolder : [" + this.wSubfolder + "]");
     return { msg: 'J ai invoque le endpoint upload file'};
   }
 
@@ -48,6 +46,7 @@ export class FilesController {
         //console.log(" [multer.diskStorage#destination] Valeur req.body : [" + req.body + "]");
         // console.log(" [multer.diskStorage#destination] Valeur req.session : [" + req.session + "]");
           // le rÃÂÃÂ©pertoire [workspace/pokus] doit exister
+          console.log(" ++ [" + workspacepath + "] Pour decider du chemin du workspace par config : ");
           cb(null, 'workspace/pokus');
       },
 

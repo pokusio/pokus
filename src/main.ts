@@ -5,7 +5,7 @@ import * as path from 'path';
 import * as multer from 'multer';
 import * as bodyParser from 'body-parser';
 
-
+const workspacepath = 'workspace/pokus'
 const app = express();
 const port = 3000;
 
