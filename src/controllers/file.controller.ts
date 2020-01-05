@@ -14,7 +14,7 @@ export class FilesController {
     let pokusStorageOnDisk = await this.handleFile(request);
     // file will be in request.fichierSousEdition, it is a buffer
     console.log ('J ai invoquÃ© le endpoint upload file');
-    console.log ('J ai enregistré le fichier [' + pokusStorageOnDisk.file.originalname + ']');
+    // console.log ('J ai enregistré le fichier [' + pokusStorageOnDisk.file.originalname + ']');
 
 
     return { msg: 'J ai invoquÃ© le endpoint upload file'};
