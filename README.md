@@ -92,7 +92,11 @@ export POKUS_API_PORT_NO=80
 
 mkdir -p ./ptitestespace
 echo 'ceci est un magnifique fichier que j ai edité' > ./ptitestespace/autrefichier.pokus
-curl -L -X POST -F 'fichierSousEdition=@"./ptitestespace/autrefichier.pokus"'  -F 'cheminRepoGitFichierSousEdition="ptitestespace/autrefichier.pokus"' http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/files/uploadFile | jq .
+
+export CHEMIN_FICHIER_DS_GIT_REPO=ptitestespace/rep1/rep2/autrefichier.pokus
+export CHEMIN_LOCAL_FICHIER=./ptitestespace/autrefichier.pokus
+
+curl -L -X POST -F "fichierSousEdition=@\"$CHEMIN_LOCAL_FICHIER\""  -F "cheminRepoGitFichierSousEdition=\"$CHEMIN_FICHIER_DS_GIT_REPO\"" http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/files/uploadFile | jq .
 
 #
 # Invocation du endpoint /
