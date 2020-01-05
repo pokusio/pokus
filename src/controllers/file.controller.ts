@@ -20,6 +20,8 @@ export class FilesController {
     // file will be in request.fichierSousEdition, it is a buffer
     console.log ('J ai invoque le endpoint upload file');
     console.log(" Valeur request.body.cheminFichierSousEdition : [" + request.body.cheminFichierSousEdition + "]");
+    let machin = request.body.cheminFichierSousEdition;
+    console.log(" Valeur machin : [" + machin + "]");
     console.log(" Valeur this.wSubfolder : [" + this.wSubfolder + "]");
     console.log(" Valeur FilesController.wSubfolderStatic : [" + FilesController.wSubfolderStatic + "]");
     // console.log ('J ai enregistrÃÂ© le fichier [' + pokusStorageOnDisk.file.originalname + ']');
@@ -45,13 +47,12 @@ export class FilesController {
 
       // By default, multer removes file extensions so let's add them back
       filename: function(req, file, cb) {
-        console.log(" Valeur chopee : [" + file.fieldname + '-' + Date.now() + path.extname(file.originalname) + "]");
-        console.log(" Valeur file.originalname : [" + file.originalname + "]");
+        console.log(" [multer.diskStorage#filename] Valeur chopee : [" + file.fieldname + '-' + Date.now() + path.extname(file.originalname) + "]");
+        console.log(" [multer.diskStorage#filename] Valeur file.originalname : [" + file.originalname + "]");
         // console.log(" Valeur [req.body.cheminFichierSousEdition] : [" + req.body.cheminFichierSousEdition + "]");
-
-        console.log(" Valeur path.extname(file.originalname) : [" + path.extname(file.originalname) + "]");
-        console.log(" Valeur du SUBFOLDER this.wSubfolder : [" + this.wSubfolder + "]")
-        console.log(" Valeur du SUBFOLDER [FilesController.wSubfolderStatic] : [" + FilesController.wSubfolderStatic + "]")
+        console.log(" [multer.diskStorage#filename] Valeur path.extname(file.originalname) : [" + path.extname(file.originalname) + "]");
+        console.log(" [multer.diskStorage#filename] Valeur du SUBFOLDER this.wSubfolder : [" + this.wSubfolder + "]")
+        console.log(" [multer.diskStorage#filename] Valeur du SUBFOLDER [FilesController.wSubfolderStatic] : [" + FilesController.wSubfolderStatic + "]")
         cb(null, "subfolder1/" + file.originalname);
       }
     });
