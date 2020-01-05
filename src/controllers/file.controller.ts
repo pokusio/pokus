@@ -46,8 +46,8 @@ export class FilesController {
         //console.log(" [multer.diskStorage#destination] Valeur req.body : [" + req.body + "]");
         // console.log(" [multer.diskStorage#destination] Valeur req.session : [" + req.session + "]");
           // le rÃÂÃÂ©pertoire [workspace/pokus] doit exister
-          console.log(" ++ [" + workspacepath + "] Pour decider du chemin du workspace par config : ");
-          cb(null, 'workspace/pokus');
+          console.log(" ++ [" + process.env.POKUS_WKSP + "] decide du chemin du workspace par config : ");
+          cb(null, process.env.POKUS_WKSP);
       },
 
       // By default, multer removes file extensions so let's add them back
