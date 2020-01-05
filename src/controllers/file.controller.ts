@@ -11,9 +11,12 @@ export class FilesController {
   // https://stackabuse.com/handling-file-uploads-in-node-js-with-expres-and-multer/
   @Post('uploadFile')
   public async uploadFile(@Request() request: express.Request): Promise<any> {
-    await this.handleFile(request);
+    let pokusStorageOnDisk = await this.handleFile(request);
     // file will be in request.fichierSousEdition, it is a buffer
     console.log ('J ai invoquÃ© le endpoint upload file');
+    console.log ('J ai enregistré le fichier [' + pokusStorageOnDisk.file.originalname + ']');
+
+
     return { msg: 'J ai invoquÃ© le endpoint upload file'};
   }
 
@@ -27,7 +30,10 @@ export class FilesController {
 
       // By default, multer removes file extensions so let's add them back
       filename: function(req, file, cb) {
-          cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+        console.log(" Valeur chopee : [" + file.fieldname + '-' + Date.now() + path.extname(file.originalname) + "]");
+        console.log(" Valeur file.originalname : [" + file.originalname + "]");
+        console.log(" Valeur path.extname(file.originalname) : [" + path.extname(file.originalname) + "]");
+        cb(null, file.fieldname + path.extname(file.originalname));
       }
     });
     // file will be in request.fichierSousEdition, it is a buffer
