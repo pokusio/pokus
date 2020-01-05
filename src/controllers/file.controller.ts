@@ -1,4 +1,4 @@
-import { Post, Get, Route, Security, Response } from 'tsoa';
+import { Post, Get, Route, Security, Response, Request } from 'tsoa';
 import * as express from 'express';
 import * as multer from 'multer';
 
