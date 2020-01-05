@@ -10,12 +10,32 @@ export class FilesController {
   static wSubfolderStatic: string;
   constructor() {
     this.wSubfolder = "defaultSubfolderOne";
+    this.uploadFile = this.uploadFile.bind(this);
   }
   // https://scotch.io/tutorials/express-file-uploads-with-multer
   // https://stackabuse.com/handling-file-uploads-in-node-js-with-expres-and-multer/
   // https://symmetrycode.com/super-easy-image-uploads-with-multer-and-express/
   @Post('uploadFile')
   public async uploadFile(@Request() request: express.Request): Promise<any> {
+    this.wSubfolder = request.body.cheminFichierSousEdition;
+    this.testOfMine(request);
+    this.testOfMine2();
+    console.log(" Valeur request.body.cheminFichierSousEdition (juste avant appel [handleFile] ): [" + request.body.cheminFichierSousEdition + "]");
+    // file will be in request.fichierSousEdition, it is a buffer
+    console.log ('J ai invoque le endpoint upload file');
+    console.log(" Valeur request.body.cheminFichierSousEdition : [" + request.body.cheminFichierSousEdition + "]");
+    let machin = request.body.cheminFichierSousEdition;
+    console.log(" Valeur machin : [" + machin + "]");
+
+    // console.log ('J ai enregistrÃÂÃÂ© le fichier [' + pokusStorageOnDisk.file.originalname + ']');
+
+
+    return { msg: 'J ai invoque le endpoint upload file'};
+  }
+  /**
+   * Just to keep the implementation that works
+   */
+  private async uploadFilePREVIOUS(@Request() request: express.Request): Promise<any> {
     this.wSubfolder = request.body.cheminFichierSousEdition;
     FilesController.wSubfolderStatic = request.body.cheminFichierSousEdition;
     this.testOfMine(request);
