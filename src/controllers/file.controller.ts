@@ -3,6 +3,7 @@ import * as express from 'express';
 import * as multer from 'multer';
 import * as path from 'path';
 import * as fs from 'fs';
+import * as shell from 'shelljs';
 
 
 @Route('files')
@@ -35,7 +36,16 @@ export class FilesController {
     console.log(" Valeur [cheminCOMPLETFichierUpload] = [" + cheminCOMPLETFichierUpload + "]");
     console.log(" Valeur [cheminCOMPLETRepertoireDansGitRepo] = [" + cheminCOMPLETRepertoireDansGitRepo + "]");
     // on créée le répêrtoire [cheminCOMPLETRepertoireDansGitRepo] s'il n'existe pas
-    // destination.txt will be created or overwritten by default.
+    // Run external tool synchronously
+    if (shell.exec("mkdir -p " + cheminCOMPLETRepertoireDansGitRepo).code !== 0) {
+      shell.echo("Error creating folder [" + cheminCOMPLETRepertoireDansGitRepo + "]");
+      shell.exit(1);
+    }
+    // [cheminCOMPLETFichierDansGitRepo] will be created or overwritten by default.
+    if (shell.exec("cp -f " + cheminCOMPLETFichierUpload + " " + cheminCOMPLETFichierDansGitRepo).code !== 0) {
+      shell.echo("Error copying file [" + cheminCOMPLETFichierUpload + "] to [" + cheminCOMPLETFichierDansGitRepo + "]");
+      shell.exit(1);
+    }
     /*
     fs.copyFile(cheminCOMPLETFichierUpload, 'destination.txt', (err) => {
       if (err) throw err;
