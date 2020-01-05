@@ -95,4 +95,17 @@ export class FilesController {
       });
     });
   }
+
+
+  // loadTextFileToIDE
+
+  /** Get user by ID */
+  @Get('/loadtext/{chemin}')
+  public async loadTextFileToIDE(chemin: string): Promise<any> {
+    console.log(" [loadtext] -> chemin = [" + chemin + "]");
+    return {
+      msg: 'Réponse au Endpoint [/loadtext]',
+      texte: "test loadtext"
+    };
+  }
 }
