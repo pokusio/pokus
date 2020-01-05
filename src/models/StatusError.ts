@@ -1,4 +1,4 @@
-export interface ErrorStatus {
+export interface StatusError {
   id: number;
   message: string;
   status?: filestatus;
