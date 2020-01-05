@@ -23,8 +23,8 @@ export class FilesController {
     console.log ('J ai invoque le endpoint upload file');
     let repertoire = request.body.cheminFichierSousEdition;
     let fichier = request.body.fichierSousEdition;
-    console.log(" Valeur request.body.cheminFichierSousEdition : [" + request.body.cheminFichierSousEdition + "]");
-    this.testOfMine(request);
+    console.log(" Valeur [request.body.cheminFichierSousEdition] = [" + request.body.cheminFichierSousEdition + "]");
+    console.log( "  Valeur de [process.env.POKUS_WKSP] = [" + process.env.POKUS_WKSP + "]")
     return { msg: 'J ai invoque le endpoint upload file'};
   }
 
