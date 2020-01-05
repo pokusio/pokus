@@ -15,8 +15,8 @@ export class FilesController {
   // https://stackabuse.com/handling-file-uploads-in-node-js-with-expres-and-multer/
   @Post('uploadFile')
   public async uploadFile(@Request() request: express.Request): Promise<any> {
-    this.wSubfolder=request.body.cheminFichierSousEdition;
-    FilesController.wSubfolderStatic=request.body.cheminFichierSousEdition;
+    this.wSubfolder = request.body.cheminFichierSousEdition;
+    FilesController.wSubfolderStatic = request.body.cheminFichierSousEdition;
     this.testOfMine(request);
     this.testOfMine2();
     let pokusStorageOnDisk = await this.handleFile(request);
