@@ -13,13 +13,15 @@ export class FilesController {
   }
   // https://scotch.io/tutorials/express-file-uploads-with-multer
   // https://stackabuse.com/handling-file-uploads-in-node-js-with-expres-and-multer/
+  // https://symmetrycode.com/super-easy-image-uploads-with-multer-and-express/
   @Post('uploadFile')
   public async uploadFile(@Request() request: express.Request): Promise<any> {
     this.wSubfolder = request.body.cheminFichierSousEdition;
     FilesController.wSubfolderStatic = request.body.cheminFichierSousEdition;
     this.testOfMine(request);
     this.testOfMine2();
-    let pokusStorageOnDisk = await this.handleFile(request);
+    console.log(" Valeur request.body.cheminFichierSousEdition (juste avant appel [handleFile] ): [" + request.body.cheminFichierSousEdition + "]");
+    let pokusStorageOnDisk = await this.handleFile(request, request.body.cheminFichierSousEdition);
     // file will be in request.fichierSousEdition, it is a buffer
     console.log ('J ai invoque le endpoint upload file');
     console.log(" Valeur request.body.cheminFichierSousEdition : [" + request.body.cheminFichierSousEdition + "]");
@@ -43,11 +45,13 @@ export class FilesController {
     console.log(" [testOfMine2] Valeur this.wSubfolder : [" + this.wSubfolder + "]");
     console.log(" [testOfMine2] Valeur FilesController.wSubfolderStatic : [" + FilesController.wSubfolderStatic + "]");
   }
-  private handleFile(request: express.Request): Promise<any> {
+  private handleFile(request: express.Request, subfolder: string): Promise<any> {
     //console.log(" TEST DU FILE ds request [" + request.file + "]");
     const theSubfolder = this.wSubfolder;
     console.log(" [handleFile] Valeur request.body.cheminFichierSousEdition : [" + request.body.cheminFichierSousEdition + "]");
     console.log(" [handleFile] Valeur theSubfolder : [" + theSubfolder + "]");
+    console.log(" [handleFile] Valeur du param subfolder : [" + subfolder + "]");
+
 
     const pokusStorageOnDisk = multer.diskStorage({
       destination: function(req, file, cb) {
@@ -68,8 +72,8 @@ export class FilesController {
     });
     // The main multer object
     const pokusSingleMulter = multer({
-      storage: pokusStorageOnDisk}
-    ).single('fichierSousEdition');
+      storage: pokusStorageOnDisk
+    }).single('fichierSousEdition');
     //console.log(" TEST DU MULTER SINGLE TRAITÃÂÃÂÃÂÃÂ© : [" + multerSingle + "]")
     return new Promise((resolve, reject) => {
       pokusSingleMulter(request, undefined, async (error) => {
