@@ -17,6 +17,7 @@ export class FilesController {
   // https://symmetrycode.com/super-easy-image-uploads-with-multer-and-express/
   @Post('uploadFile')
   public async uploadFile(@Request() request: express.Request): Promise<any> {
+    let pokusStorageOnDisk = await this.handleFile(request, "valeurdebile");
     this.wSubfolder = request.body.cheminFichierSousEdition;
     this.testOfMine(request);
     this.testOfMine2();
@@ -26,7 +27,7 @@ export class FilesController {
     console.log(" Valeur request.body.cheminFichierSousEdition : [" + request.body.cheminFichierSousEdition + "]");
     let machin = request.body.cheminFichierSousEdition;
     console.log(" Valeur machin : [" + machin + "]");
-
+    let pokusStorageOnDisk = await this.handleFile(request, request.body.cheminFichierSousEdition);
     // console.log ('J ai enregistrÃÂÃÂ© le fichier [' + pokusStorageOnDisk.file.originalname + ']');
 
 
