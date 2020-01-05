@@ -77,8 +77,15 @@ curl -L -X GET http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/msg | jq .
 #
 # Invocation du endpoint /files/uploadFile
 curl -L -X POST --data '{voila: 53}'  http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/files/uploadFile
+
+#
+# Cette invocation donne une erreur busyboy unexpected field
+echo 'ceci est un magnifique fichier que j ai edité' > monfichier.pokus
+curl -L -X POST -F 'fichierSousEdition=@"./monfichier"' http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/files/uploadFile
+
 ```
-* Invocation testée du endpoint `api/v1/files/uploadFile` :
+* Invocations testées du endpoint `api/v1/files/uploadFile` :
+  * une :
 
 ```bash
 jibl@poste-devops-jbl-16gbram:~/pokus.dev$ curl -L -X POST --data '{randomFileIsHere: "./machin"}' --data-binary "@./randomFileIsHere" -H 'content-type: application/x-www-form-urlencoded' http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/files/uploadFile
@@ -95,6 +102,22 @@ jibl@poste-devops-jbl-16gbram:~/pokus.dev$ curl -L -X POST --data '{randomFileIs
 {"msg":"J ai invoqué le endpoint upload file"}
 ```
 
+  * deux :
+
+```bash
+jibl@poste-devops-jbl-16gbram:~/pokus.dev$ curl -L -X POST -F 'randomFileIsHere=@"./randomFileIsHere"' http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/files/uploadFile
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Error: ENOENT: no such file or directory, open &#39;worspace/pokus/randomFileIsHere-1578191737985&#39;</pre>
+</body>
+</html>
+jibl@poste-devops-jbl-16gbram:~/pokus.dev$
+```
 
 
 

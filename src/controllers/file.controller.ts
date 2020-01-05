@@ -18,9 +18,11 @@ export class FilesController {
   }
 
   private handleFile(request: express.Request): Promise<any> {
+    console.log(" TEST DU FILE ds request [" + request.file + "]");
     const pokusStorageOnDisk = multer.diskStorage({
       destination: function(req, file, cb) {
-          cb(null, 'worspace/pokus');
+          // le répertoire [workspace/pokus] doit exister 
+          cb(null, 'workspace/pokus');
       },
 
       // By default, multer removes file extensions so let's add them back
@@ -29,8 +31,8 @@ export class FilesController {
       }
     });
 
-    const multerSingle = multer({ storage: pokusStorageOnDisk}).single('randomFileIsHere');
-    console.log(" TEST DU MULTER SINGLE TRAITÃ© : [" + multerSingle + "]")
+    const multerSingle = multer({ storage: pokusStorageOnDisk}).single('fichierSousEdition');
+    //console.log(" TEST DU MULTER SINGLE TRAITÃ© : [" + multerSingle + "]")
     return new Promise((resolve, reject) => {
       multerSingle(request, undefined, async (error) => {
         if (error) {
