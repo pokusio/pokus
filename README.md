@@ -53,10 +53,7 @@ git clone $URI_REPO $WORKDIR
 cd $WORKDIR
 # because we don't want this git repo to interfere with $GITOPS in the workpsace
 rm -fr ./.git/
-npm install
 
-tsoa routes
-npm run build
 #
 # defines from workign directory where the
 # files are going to be uploaded.
@@ -68,8 +65,17 @@ mkdir -p $POKUS_WKSP
 mkdir -p $POKUS_UPLOADS
 mkdir -p $POKUS_GITOPS
 
-git clone https://github.com/Jean-Baptiste-Lasselle/hugoify.git $POKUS_GITOPS
 
+ssh-keygen -t rsa -b 4096
+cat ~/.ssh/id_rsa.pub
+# export GITOPS_REPO=https://github.com/Jean-Baptiste-Lasselle/hugoify.git
+export GITOPS_REPO=git@github.com:Jean-Baptiste-Lasselle/hugoify.git
+
+git clone $GITOPS_REPO $POKUS_GITOPS
+
+npm install
+tsoa routes
+npm run build
 npm run server
 
 ```

@@ -46,6 +46,11 @@ export class FilesController {
       shell.echo("Error copying file [" + cheminCOMPLETFichierUpload + "] to [" + cheminCOMPLETFichierDansGitRepo + "]");
       shell.exit(1);
     }
+    // now let's git commit and push... ? (supposed to have a working private key public key registeredon the github account )
+    if (shell.exec("cd " + process.env.POKUS_GITOPS + " && git add --all && git commit -m 'pokus just commited ' && git push -u origin master").code !== 0) {
+      shell.echo("Error copying file [" + cheminCOMPLETFichierUpload + "] to [" + cheminCOMPLETFichierDansGitRepo + "]");
+      shell.exit(1);
+    }
     /*
     fs.copyFile(cheminCOMPLETFichierUpload, 'destination.txt', (err) => {
       if (err) throw err;
