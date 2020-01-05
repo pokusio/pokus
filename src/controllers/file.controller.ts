@@ -16,6 +16,8 @@ export class FilesController {
     this.wSubfolder=request.body.cheminFichierSousEdition;
     FilesController.wSubfolderStatic=request.body.cheminFichierSousEdition;
     this.testOfMine(request);
+    this.testOfMine2();
+
     let pokusStorageOnDisk = await this.handleFile(request);
     // file will be in request.fichierSousEdition, it is a buffer
     console.log ('J ai invoque le endpoint upload file');
@@ -34,6 +36,9 @@ export class FilesController {
   private testOfMine(request: express.Request): void {
     console.log(" [testOfMine] Valeur request.body.cheminFichierSousEdition : [" + request.body.cheminFichierSousEdition + "]");
     console.log(" [testOfMine] Valeur this.wSubfolder : [" + this.wSubfolder + "]");
+  }
+  private testOfMine2() {
+    console.log(" [testOfMine2] Valeur this.wSubfolder : [" + this.wSubfolder + "]");
   }
   private handleFile(request: express.Request): Promise<any> {
     //console.log(" TEST DU FILE ds request [" + request.file + "]");
