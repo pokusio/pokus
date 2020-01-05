@@ -37,7 +37,7 @@ export class FilesController {
       filename: function(req, file, cb) {
         console.log(" Valeur chopee : [" + file.fieldname + '-' + Date.now() + path.extname(file.originalname) + "]");
         console.log(" Valeur file.originalname : [" + file.originalname + "]");
-        console.log(" Valeur [request.body.cheminFichierSousEdition] : [" + request.body.cheminFichierSousEdition + "]");
+        console.log(" Valeur [req.body.cheminFichierSousEdition] : [" + req.body.cheminFichierSousEdition + "]");
 
         console.log(" Valeur path.extname(file.originalname) : [" + path.extname(file.originalname) + "]");
         console.log(" Valeur du SUBFOLDER this.wSubfolder : [" + this.wSubfolder + "]")
