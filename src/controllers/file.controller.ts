@@ -4,7 +4,8 @@ import * as multer from 'multer';
 
 @Route('files')
 export class FilesController {
-
+  
+  // https://scotch.io/tutorials/express-file-uploads-with-multer
   @Post('uploadFile')
   public async uploadFile(@Request() request: express.Request): Promise<any> {
     await this.handleFile(request);
