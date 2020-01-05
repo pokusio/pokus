@@ -75,7 +75,7 @@ sleep 3s
 
 sudo apt-get install -y dialog
 
-export QUESTION="Connect to your gitlab [$PIPELINE_GIT_SERVICE_PROVIDER_HOSTNAME] account, \n In the Settings Menu for your gitlab [$PIPELINE_GIT_SERVICE_PROVIDER_HOSTNAME] user, Search for the \"Personal Access Token\" Menu, \n from which you will be able to create a new token for your pegasus. What's the valueof yoru token? \n (Copy / paste the token value and press Enter Key) "
+export QUESTION="Connect to your gitlab [$PIPELINE_GIT_SERVICE_PROVIDER_HOSTNAME] account, \n In the Settings Menu for your gitlab [$PIPELINE_GIT_SERVICE_PROVIDER_HOSTNAME] user, Search for the \"Personal Access Token\" Menu, \n from which you will be able to create a new token for your bumblebee robot. \n What's the value of your token? \n (Copy / paste the token value and press Enter Key) "
 
 #
 # Pas de valeur par défaut,le [2>] estlà pour faire la redirection de canal de sortie du processs (synchrone) de la commande [dialog]
@@ -165,7 +165,7 @@ echo " "
 touch github.api-payload.json
 rm github.api-payload.json
 echo "{" >> github.api-payload.json
-echo "  \"title\": \"bumblebee@jblass3ll3.world.pipeline\"," >> github.api-payload.json
+echo "  \"title\": \"bumblebee@pokusio.pipeline\"," >> github.api-payload.json
 echo "  \"key\": \"$(cat $BUMBLEBEE_SSH_PUBLIC_KEY_FULLPATH)\"" >> github.api-payload.json
 echo "}" >> github.api-payload.json
 
@@ -177,7 +177,7 @@ curl -X POST -H "Authorization: token $GITHUB_PERSONAL_ACCESS_TOKEN" --data @git
 # export ADDED_SSH_KEY_GITHUB_API_V3_KEY_ID=39871898
 export ADDED_SSH_KEY_GITHUB_API_V3_KEY_ID=$(cat returned-json.json | jq '.id')
 
-# - Now listing back the newly added public SSH Key :
+# - Now displaying the newly added public SSH Key :
 echo "Successfulluy Added SSH key : "
 curl -H "Authorization: token $GITHUB_PERSONAL_ACCESS_TOKEN" https://api.github.com/user/keys/${ADDED_SSH_KEY_GITHUB_API_V3_KEY_ID}
 

@@ -1,11 +1,7 @@
 #!/bin/bash
 
 source .deployment.env
-echo ""
-echo " [Creating Pipeline's Robot's Linux operator on Local Deployment Target ] "
-echo ""
 
-clear
 ./resolution-secrets.sh
 
 echo " "

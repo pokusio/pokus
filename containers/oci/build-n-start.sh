@@ -60,11 +60,12 @@ echo " -------------------------------------------------------------------------
 
 mkdir -p $BUMBLEBEE_WORKSPACE_INSIDE_CONTAINER
 
-git clone $SSH_URI_REPO_GIT_CODE_HUGO $BUMBLEBEE_WORKSPACE_INSIDE_CONTAINER
+git clone $SSH_URI_REPO_GIT_CODE_POKUS $BUMBLEBEE_WORKSPACE_INSIDE_CONTAINER
+git clone $SSH_URI_REPO_GIT_CODE_HUGO $POKUS_GITOPS
 
 cd $BUMBLEBEE_WORKSPACE_INSIDE_CONTAINER
 
-export URI_REPO=https://github.com/Jean-Baptiste-Lasselle/fwdkatacoda.git
+export SSH_URI_REPO_GIT_CODE_POKUS=https://github.com/Jean-Baptiste-Lasselle/fwdkatacoda.git
 export WORKDIR=$(pwd)/pokus
 mkdir $WORKDIR
 git clone $URI_REPO $WORKDIR
@@ -76,12 +77,11 @@ rm -fr ./.git/
 # defines from workign directory where the
 # files are going to be uploaded.
 #
-export POKUS_WKSP=$(pwd)/workspace
-export POKUS_UPLOADS=$POKUS_WKSP/uploads
-export POKUS_GITOPS=$POKUS_WKSP/pokus
-mkdir -p $POKUS_WKSP
-mkdir -p $POKUS_UPLOADS
-mkdir -p $POKUS_GITOPS
+# export POKUS_WKSP=$BUMBLEBEE_WORKSPACE_INSIDE_CONTAINER/esptravail
+# export POKUS_UPLOADS=$BUMBLEBEE_WORKSPACE_INSIDE_CONTAINER/uploads
+# export POKUS_GITOPS=$BUMBLEBEE_WORKSPACE_INSIDE_CONTAINER/pokus
+
+
 
 # mkdir -p ~/.ssh
 # ssh-keygen -t rsa -b 4096
