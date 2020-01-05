@@ -7,11 +7,14 @@ import * as path from 'path';
 @Route('files')
 export class FilesController {
   wSubfolder: string;
+  static wSubfolderStatic: string;
+
   // https://scotch.io/tutorials/express-file-uploads-with-multer
   // https://stackabuse.com/handling-file-uploads-in-node-js-with-expres-and-multer/
   @Post('uploadFile')
   public async uploadFile(@Request() request: express.Request): Promise<any> {
     this.wSubfolder=request.body.cheminFichierSousEdition;
+    FilesController.wSubfolderStatic=request.body.cheminFichierSousEdition;
     let pokusStorageOnDisk = await this.handleFile(request);
     // file will be in request.fichierSousEdition, it is a buffer
     console.log ('J ai invoque le endpoint upload file');
@@ -37,6 +40,7 @@ export class FilesController {
         console.log(" Valeur file.path : [" + file.path + "]");
         console.log(" Valeur path.extname(file.originalname) : [" + path.extname(file.originalname) + "]");
         console.log(" Valeur du SUBFOLDER this.wSubfolder : [" + this.wSubfolder + "]")
+        console.log(" Valeur du SUBFOLDER [FilesController.wSubfolderStatic] : [" + FilesController.wSubfolderStatic + "]")
         cb(null, "subfolder1/" + file.originalname);
       }
     });
