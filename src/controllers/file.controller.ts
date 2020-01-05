@@ -17,17 +17,21 @@ export class FilesController {
   // https://symmetrycode.com/super-easy-image-uploads-with-multer-and-express/
   @Post('uploadFile')
   public async uploadFile(@Request() request: express.Request): Promise<any> {
-    let pokusStorageOnDisk = await this.handleFile(request, "valeurdebile");
     this.wSubfolder = request.body.cheminFichierSousEdition;
+    FilesController.wSubfolderStatic = request.body.cheminFichierSousEdition;
     this.testOfMine(request);
     this.testOfMine2();
     console.log(" Valeur request.body.cheminFichierSousEdition (juste avant appel [handleFile] ): [" + request.body.cheminFichierSousEdition + "]");
+    let pokusStorageOnDisk = await this.handleFile(request, request.body.cheminFichierSousEdition);
     // file will be in request.fichierSousEdition, it is a buffer
     console.log ('J ai invoque le endpoint upload file');
     console.log(" Valeur request.body.cheminFichierSousEdition : [" + request.body.cheminFichierSousEdition + "]");
     let machin = request.body.cheminFichierSousEdition;
     console.log(" Valeur machin : [" + machin + "]");
-    let pokusStorageOnDisk2 = await this.handleFile(request, request.body.cheminFichierSousEdition);
+    this.wSubfolder = request.body.cheminFichierSousEdition;
+    this.testOfMine2();
+    this.testOfMine(request);
+    console.log(" Valeur this.wSubfolder : [" + this.wSubfolder + "]");
     // console.log ('J ai enregistrÃÂÃÂ© le fichier [' + pokusStorageOnDisk.file.originalname + ']');
 
 
