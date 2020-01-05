@@ -35,14 +35,16 @@ export class FilesController {
         console.log(" Valeur file.path : [" + file.path + "]");
         console.log(" Valeur path.extname(file.originalname) : [" + path.extname(file.originalname) + "]");
 
-        cb(null, file.originalname + path.extname(file.originalname));
+        cb(null, file.originalname);
       }
     });
-    // file will be in request.fichierSousEdition, it is a buffer
-    const multerSingle = multer({ storage: pokusStorageOnDisk}).single('fichierSousEdition');
+    // The main multer object
+    const pokusSingleMulter = multer({
+      storage: pokusStorageOnDisk}
+    ).single('fichierSousEdition');
     //console.log(" TEST DU MULTER SINGLE TRAITÃ© : [" + multerSingle + "]")
     return new Promise((resolve, reject) => {
-      multerSingle(request, undefined, async (error) => {
+      pokusSingleMulter(request, undefined, async (error) => {
         if (error) {
           reject(error);
         }
