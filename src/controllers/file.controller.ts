@@ -24,6 +24,7 @@ export class FilesController {
     let cheminFichierDansGitRepoPre = request.body.cheminFichierSousEdition;
     let cheminFichierDansGitRepo = cheminFichierDansGitRepoPre.replace(/"/g,'');
     console.log(" Valeur [request.body.cheminFichierSousEdition] = [" + request.body.cheminFichierSousEdition + "]");
+    console.log(" Valeur [cheminFichierDansGitRepo] = [" + cheminFichierDansGitRepo + "]");
     console.log( "  Valeur de [process.env.POKUS_WKSP] = [" + process.env.POKUS_WKSP + "]");
     console.log( "  Valeur de [process.env.POKUS_UPLOADS] = [" + process.env.POKUS_UPLOADS + "]");
     console.log( "  Valeur de [process.env.POKUS_UPLOADS] = [" + process.env.POKUS_GITOPS + "]");
