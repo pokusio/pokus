@@ -21,9 +21,8 @@ export class FilesController {
     let pokusStorageOnDisk = await this.handleFile(request, request.body.cheminFichierSousEdition);
     // file will be in request.fichierSousEdition, it is a buffer
     console.log ('J ai invoque le endpoint upload file');
-    let cheminFichierDansGitRepo = request.body.cheminFichierSousEdition;
-    let cheminFichierDansGitRepo = cheminFichierDansGitRepo.replace('"','');
-    let cheminFichierDansGitRepo = cheminFichierDansGitRepo.replace('"','');
+    let cheminFichierDansGitRepoPre = request.body.cheminFichierSousEdition;
+    let cheminFichierDansGitRepo = cheminFichierDansGitRepoPre.replace('"/gi','');
     console.log(" Valeur [request.body.cheminFichierSousEdition] = [" + request.body.cheminFichierSousEdition + "]");
     console.log( "  Valeur de [process.env.POKUS_WKSP] = [" + process.env.POKUS_WKSP + "]");
     console.log( "  Valeur de [process.env.POKUS_UPLOADS] = [" + process.env.POKUS_UPLOADS + "]");
