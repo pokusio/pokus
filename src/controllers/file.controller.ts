@@ -2,9 +2,8 @@ import { Post, Get, Route, Security, Response, Request } from 'tsoa';
 import * as express from 'express';
 import * as multer from 'multer';
 import * as path from 'path';
-//import * as fs from 'fs';
+import * as fs from 'fs';
 import * as shell from 'shelljs';
-
 
 @Route('files')
 export class FilesController {
@@ -113,13 +112,21 @@ export class FilesController {
     *
     ***/
 
+
+
   @Get('/loadtext/{chemin}')
   public async loadTextFileToIDE(chemin: string): Promise<any> {
     console.log(" [loadtext] -> chemin = [" + chemin + "]");
+
+    let texte = fs.readFile(path.join(chemin), (err, data) => {
+        if (err) throw err;
+        console.log(data);
+    })
     // Ici je dois juste charger le contenu texte du fichier
     return {
       msg: 'Réponse au Endpoint [/loadtext]',
-      texte: chemin
+      chemin: chemin,
+      texte: texte
     };
   }
 }
