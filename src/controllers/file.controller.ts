@@ -12,7 +12,7 @@ export class FilesController {
   @Post('uploadFile')
   public async uploadFile(@Request() request: express.Request): Promise<any> {
     await this.handleFile(request);
-    // file will be in request.randomFileIsHere, it is a buffer
+    // file will be in request.fichierSousEdition, it is a buffer
     console.log ('J ai invoquÃ© le endpoint upload file');
     return { msg: 'J ai invoquÃ© le endpoint upload file'};
   }
@@ -21,7 +21,7 @@ export class FilesController {
     console.log(" TEST DU FILE ds request [" + request.file + "]");
     const pokusStorageOnDisk = multer.diskStorage({
       destination: function(req, file, cb) {
-          // le répertoire [workspace/pokus] doit exister 
+          // le répertoire [workspace/pokus] doit exister
           cb(null, 'workspace/pokus');
       },
 
@@ -30,7 +30,7 @@ export class FilesController {
           cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
       }
     });
-
+    // file will be in request.fichierSousEdition, it is a buffer
     const multerSingle = multer({ storage: pokusStorageOnDisk}).single('fichierSousEdition');
     //console.log(" TEST DU MULTER SINGLE TRAITÃ© : [" + multerSingle + "]")
     return new Promise((resolve, reject) => {
