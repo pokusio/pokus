@@ -108,7 +108,7 @@ curl -L -X GET http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1 | jq .
 curl -L -X GET http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/msg | jq .
 
 ```
-* Invocation testée du endpoint `api/v1/files/uploadFile`Ici, en ajoutant le paramètre de formulaire _http multipart_ `cheminRepoGitFichierSousEdition`, ait pour valeur le chemin du sous-répertoire de `workspace/pokus`, dans lequel on veut enregistrer le fichier sur le serveur :
+* Invocation testée du endpoint `api/v1/files/uploadFile` Ici, en ajoutant le paramètre de formulaire _http multipart_ `cheminRepoGitFichierSousEdition`, ait pour valeur le chemin du sous-répertoire de `workspace/pokus`, dans lequel on veut enregistrer le fichier sur le serveur :
 
 ```bash
 curl -L -X POST -F 'fichierSousEdition=@"./ptitestespace/autrefichier.pokus"'  -F 'cheminRepoGitFichierSousEdition="./ptitestespace/"' http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/files/uploadFile
