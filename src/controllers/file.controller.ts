@@ -29,6 +29,10 @@ export class FilesController {
 
   private handleFile(request: express.Request): Promise<any> {
     //console.log(" TEST DU FILE ds request [" + request.file + "]");
+    const theSubfolder = this.wSubfolder;
+    console.log(" [handleFile] Valeur request.body.cheminFichierSousEdition : [" + request.body.cheminFichierSousEdition + "]");
+    console.log(" [handleFile] Valeur theSubfolder : [" + theSubfolder + "]");
+
     const pokusStorageOnDisk = multer.diskStorage({
       destination: function(req, file, cb) {
           // le rÃÂ©pertoire [workspace/pokus] doit exister
