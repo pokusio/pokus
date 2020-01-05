@@ -62,6 +62,8 @@ services:
       - $BUMBLEBEE_SECRET_VAULT_OUTSIDE_CONTAINER:$BUMBLEBEE_HOME_INSIDE_CONTAINER/.secrets:rw
     networks:
       - pipeline_pokus
+    ports:
+      - 3000:3000
     # ---------------------------------------------
     # [docker [run|exec] -it ...]
     # stdinURI_DWNLD_STARTER_EXAMPLE_CONFIG
