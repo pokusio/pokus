@@ -115,6 +115,12 @@ curl -L -X POST -F 'fichierSousEdition=@"./ptitestespace/autrefichier.pokus"'  -
 # pour l'instant, les fichiers sont tous enregistrés dansle sous-répertoire 'workspace/pokus/subfolder1'
 ```
 
+### Running Containerized
+
+TOP TODO :
+
+* faire le endpoint qui va chercher un fichier, lire dedans, et renvoyer le contenu texte au client `Angular` .
+* pour lire ecrireds fichiers en TypeScript: https://stackoverflow.com/questions/33643107/read-and-write-a-text-file-in-typescript
 
 
 ## Install
