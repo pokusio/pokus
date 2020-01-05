@@ -79,7 +79,8 @@ rm -fr ./.git/
 
 git clone $SSH_URI_REPO_GIT_CODE_HUGO $POKUS_GITOPS
 
-npm install --save-dev tsoa
+npm install -g tsoa
+
 npm install
 tsoa routes
 npm run build
