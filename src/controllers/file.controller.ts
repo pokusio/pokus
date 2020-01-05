@@ -22,11 +22,12 @@ export class FilesController {
     // file will be in request.fichierSousEdition, it is a buffer
     console.log ('J ai invoque le endpoint upload file');
     let cheminFichierDansGitRepo = request.body.cheminFichierSousEdition;
+    let cheminFichierDansGitRepo = cheminFichierDansGitRepo.replace('"','');
     console.log(" Valeur [request.body.cheminFichierSousEdition] = [" + request.body.cheminFichierSousEdition + "]");
     console.log( "  Valeur de [process.env.POKUS_WKSP] = [" + process.env.POKUS_WKSP + "]");
     console.log( "  Valeur de [process.env.POKUS_UPLOADS] = [" + process.env.POKUS_UPLOADS + "]");
     console.log( "  Valeur de [process.env.POKUS_UPLOADS] = [" + process.env.POKUS_GITOPS + "]");
-    return { msg: 'J ai invoque le endpoint upload file', cheminFichierDansGitRepo: cheminFichierDansGitRepo};
+    return { msg: 'J ai invoque le endpoint upload file', cheminFichierDansGitRepo: cheminFichierDansGitRepo };
   }
 
   private handleFile(request: express.Request, subfolder: string): Promise<any> {
