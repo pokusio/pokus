@@ -117,8 +117,8 @@ export class FilesController {
   @Get('/loadtext/{chemin}')
   public async loadTextFileToIDE(chemin: string): Promise<any> {
     console.log(" [loadtext] -> chemin = [" + chemin + "]");
-
-    let texte = fs.readFile(path.join(process.env.POKUS_GITOPS + '/' + chemin), (err, data) => {
+    let cheminCOMPLETFichier = process.env.POKUS_UPLOADS + '/' + chemin.split('=').pop();
+    let leTexte = fs.readFile(path.join(process.env.POKUS_UPLOADS + '/' + chemin.split('=').pop()), (err, data) => {
         if (err) throw err;
         console.log(data);
     })
@@ -126,7 +126,7 @@ export class FilesController {
     return {
       msg: 'Réponse au Endpoint [/loadtext]',
       chemin: chemin,
-      texte: texte
+      texte: leTexte
     };
   }
 }
