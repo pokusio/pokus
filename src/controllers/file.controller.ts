@@ -15,7 +15,7 @@ export class FilesController {
   public async uploadFile(@Request() request: express.Request): Promise<any> {
     this.wSubfolder=request.body.cheminFichierSousEdition;
     FilesController.wSubfolderStatic=request.body.cheminFichierSousEdition;
-    testOfMine(request);
+    this.testOfMine(request);
     let pokusStorageOnDisk = await this.handleFile(request);
     // file will be in request.fichierSousEdition, it is a buffer
     console.log ('J ai invoque le endpoint upload file');
