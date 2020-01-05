@@ -27,22 +27,21 @@ export class FilesController {
     let cheminCOMPLETFichierDansGitRepo = process.env.POKUS_GITOPS + '/' + cheminFichierDansGitRepo;
     let cheminCOMPLETFichierUpload = process.env.POKUS_UPLOADS + '/' + cheminFichierDansGitRepo.split('/').pop();
 
-    let repertoireSplits = str.split('/');
-    let repertoire = repertoireSplits.splice(-1, (splits.length - 1));
+    let repertoireSplits = cheminFichierDansGitRepo.split('/');
+    let repertoire = repertoireSplits.splice(0, (repertoireSplits.length - 1));
 
-    let cheminCOMPLETRepertoireDansGitRepo = process.env.POKUS_GITOPS + '/' + repertoire;
-
-    console.log(" Valeur [request.body.cheminFichierSousEdition] = [" + request.body.cheminFichierSousEdition + "]");
-    console.log(" Valeur [cheminFichierDansGitRepo] = [" + cheminFichierDansGitRepo + "]");
+    let cheminCOMPLETRepertoireDansGitRepo = process.env.POKUS_GITOPS + '/' + repertoire.join('/');
     console.log(" Valeur [cheminCOMPLETFichierDansGitRepo] = [" + cheminCOMPLETFichierDansGitRepo + "]");
     console.log(" Valeur [cheminCOMPLETFichierUpload] = [" + cheminCOMPLETFichierUpload + "]");
     console.log(" Valeur [cheminCOMPLETRepertoireDansGitRepo] = [" + cheminCOMPLETRepertoireDansGitRepo + "]");
-
+    // on créée le répêrtoire [cheminCOMPLETRepertoireDansGitRepo] s'il n'existe pas
     // destination.txt will be created or overwritten by default.
+    /*
     fs.copyFile(cheminCOMPLETFichierUpload, 'destination.txt', (err) => {
       if (err) throw err;
       console.log('source.txt was copied to destination.txt');
     });
+    */
     console.log( "  Valeur de [process.env.POKUS_WKSP] = [" + process.env.POKUS_WKSP + "]");
     console.log( "  Valeur de [process.env.POKUS_UPLOADS] = [" + process.env.POKUS_UPLOADS + "]");
     console.log( "  Valeur de [process.env.POKUS_GITOPS] = [" + process.env.POKUS_GITOPS + "]");
