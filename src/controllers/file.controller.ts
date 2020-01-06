@@ -38,10 +38,10 @@ export class FilesController {
     // Run external tool synchronously
     
     //check : /pokus/server/uploads/ = process.env.POKUS_GITOPS = " + process.env.POKUS_GITOPS + " "
-    console.log("Verif du contenu du répertoire /pokus/server/uploads/ = process.env.POKUS_GITOPS = " + process.env.POKUS_GITOPS + "" );
+    console.log("Verif du contenu du répertoire /pokus/server/uploads/ = process.env.POKUS_UPLOADS = " + process.env.POKUS_UPLOADS + "" );
     
-    if (shell.exec("ls -allh " + process.env.POKUS_GITOPS + " ").code !== 0) {
-      console.log("Error displaying folder content of [" + process.env.POKUS_GITOPS + "] ");
+    if (shell.exec("ls -allh " + process.env.POKUS_UPLOADS + " ").code !== 0) {
+      console.log("Error displaying folder content of [" + process.env.POKUS_UPLOADS + "] ");
       shell.exit(1);
     }
 
