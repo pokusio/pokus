@@ -36,6 +36,16 @@ export class FilesController {
     console.log(" Valeur [cheminCOMPLETRepertoireDansGitRepo] = [" + cheminCOMPLETRepertoireDansGitRepo + "]");
     // on créée le répêrtoire [cheminCOMPLETRepertoireDansGitRepo] s'il n'existe pas
     // Run external tool synchronously
+    
+    //check : /pokus/server/uploads/ = process.env.POKUS_GITOPS = " + process.env.POKUS_GITOPS + " "
+    console.log("Verif du contenu du répertoire /pokus/server/uploads/ = process.env.POKUS_GITOPS = " + process.env.POKUS_GITOPS + "" );
+    
+    if (shell.exec("ls -allh " + process.env.POKUS_GITOPS + " ").code !== 0) {
+      console.log("Error displaying folder content of [" + process.env.POKUS_GITOPS + "] ");
+      shell.exit(1);
+    }
+
+    
     if (shell.exec("mkdir -p " + cheminCOMPLETRepertoireDansGitRepo).code !== 0) {
       shell.echo("Error creating folder [" + cheminCOMPLETRepertoireDansGitRepo + "]");
       shell.exit(1);
