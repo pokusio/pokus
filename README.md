@@ -1,5 +1,7 @@
 # Pokus
 
+https://pok-us.io/ _(domain name bought on 22/02/2020 )_
+
 The distributed, scalable Content Manager for hugo.
 
 `TypeScript` / `TSOA` based microservice app.
