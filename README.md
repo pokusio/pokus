@@ -1,6 +1,7 @@
 # Pokus
 
 https://pok-us.io/ _(domain name bought on 22/02/2020 )_
+J'ai acheté le nom de domaine https://pok-us.io/ pour le projet `pokus`, et notamment sa partie `pokus'portus`
 
 The distributed, scalable Content Manager for hugo.
 
