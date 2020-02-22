@@ -26,6 +26,8 @@ atom .
 
 ## Brouillon: build n run
 
+super tuto angular rest api JWT auth https://www.toptal.com/angular/angular-6-jwt-authentication
+ 
 ### Build : private infra
 
 ```bash
