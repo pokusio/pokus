@@ -26,72 +26,102 @@ atom .
 
 ## Brouillon: build n run
 
-super tuto angular rest api JWT auth https://www.toptal.com/angular/angular-6-jwt-authentication
+_super tuto angular rest api JWT auth https://www.toptal.com/angular/angular-6-jwt-authentication_
 
-### Build : private infra
+
+### Build, run, n test
+
+* Dans un environnement :
 
 ```bash
+# --
+jbl@poste-devops-jbl-16gbram:~/pokus.dev$ node --version
+v14.4.0
+jbl@poste-devops-jbl-16gbram:~/pokus.dev$ npm --version
+6.14.5
+jbl@poste-devops-jbl-16gbram:~/pokus.dev$ yarn --version
+1.22.4
+jbl@poste-devops-jbl-16gbram:~/pokus.dev$ npm list --depth 0 -g tsoa
+/usr/lib
+└── tsoa@3.2.1
 
+jbl@poste-devops-jbl-16gbram:~/pokus.dev$ npm list --depth 1 -g tsoa
+/usr/lib
+└── tsoa@3.2.1
+
+jbl@poste-devops-jbl-16gbram:~/pokus.dev$ npm list --depth 0 -g multer
+/usr/lib
+└── multer@1.4.2
+
+jbl@poste-devops-jbl-16gbram:~/pokus.dev$ npm list --depth 1 -g multer
+/usr/lib
+└── multer@1.4.2
+
+jbl@poste-devops-jbl-16gbram:~/pokus.dev$
+
+```
+
+* exécuter :
+
+```bash
+export URI_POKUS_REPO=git@gitlab.com:second-bureau/pegasus/pokus/pokus.git
+export WORKDIR=$(pwd)/pokus-test
+git clone $URI_POKUS_REPO $WORKDIR
+cd $WORKDIR
+# because we don't want this git repo to interfere with $GITOPS in the workpsace
+rm -fr ./.git/
+
+#
+# defines from working directory where the
+# files are going to be uploaded.
+#
+export MULTER_VERSION='1.4.2'
+export TSOA_VERSION='3.2.1'
+export POKUS_WKSP=$(pwd)/pokus.workspace
+export POKUS_UPLOADS=${POKUS_WKSP}/uploads
+export POKUS_GITOPS=${POKUS_WKSP}/pokus
+mkdir -p $POKUS_UPLOADS
+mkdir -p $POKUS_GITOPS
+# mkdir -p ~/.ssh
+# ssh-keygen -t rsa -b 4096
+# cat ~/.ssh/id_rsa.pub
+export GITOPS_REPO=https://github.com/Jean-Baptiste-Lasselle/hugoify.git
+# export GITOPS_REPO=git@github.com:Jean-Baptiste-Lasselle/hugoify.git
+git clone ${GITOPS_REPO} ${POKUS_GITOPS}
+npm i -g tsoa@${TSOA_VERSION} multer@${MULTER_VERSION}
 npm install
-
-tsoa routes
+tsoa routes -c tsoa.json
 npm run build
 npm run server
 ```
-* Suite au démarrage du serveur, on aura une réponse API en requêtant en GET :
+
+* Suite au démarrage du serveur, on aura, dans une autre session shell, une réponse API en requêtant en `GET` :
 
 ```bash
 #
-export POKUS_API_HOSTNAME=poste-devops-typique
+export POKUS_API_HOSTNAME="$(hostname)"
+export POKUS_API_HOSTNAME=localhost
 export POKUS_API_PORT_NO=3000
+export POKUS_UPLOADS=$(pwd)/pokus_uploads
+export POKUS_GITOPS=$(pwd)/pokus_gitops
 
 curl -X GET http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1 | jq .
 curl -X GET http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/msg | jq .
 
 ```
 
-### Build : Sur [Katacoda.com] / [NodeJS] playground
+* Suite au démarrage du serveur, on aura, dans une autre session shell, une réponse API en requêtant en GET :
 
 ```bash
-export URI_REPO=https://github.com/Jean-Baptiste-Lasselle/fwdkatacoda.git
-export WORKDIR=$(pwd)/pokus
-mkdir $WORKDIR
-git clone $URI_REPO $WORKDIR
-cd $WORKDIR
-# because we don't want this git repo to interfere with $GITOPS in the workpsace
-rm -fr ./.git/
-
-#
-# defines from workign directory where the
-# files are going to be uploaded.
-#
-export POKUS_WKSP=$(pwd)/workspace
-export POKUS_UPLOADS=$POKUS_WKSP/uploads
-export POKUS_GITOPS=$POKUS_WKSP/pokus
-mkdir -p $POKUS_WKSP
-mkdir -p $POKUS_UPLOADS
-mkdir -p $POKUS_GITOPS
-
-# mkdir -p ~/.ssh
-# ssh-keygen -t rsa -b 4096
-# cat ~/.ssh/id_rsa.pub
-export GITOPS_REPO=https://github.com/Jean-Baptiste-Lasselle/hugoify.git
-# export GITOPS_REPO=git@github.com:Jean-Baptiste-Lasselle/hugoify.git
-
-git clone $GITOPS_REPO $POKUS_GITOPS
-npm i -g tsoa path multer
-npm install
-tsoa routes
-npm run build
-npm run server
-
-```
-* Suite au démarrage du serveur, on aura une réponse API en requêtant en GET :
-
-```bash
-# Sur [Katacoda.com] / [NodeJS] playground :
+# On [Katacoda.com] / [NodeJS] playground :
 export POKUS_API_HOSTNAME=2886795275-3000-elsy06.environments.katacoda.com
 export POKUS_API_PORT_NO=80
+# Locally
+export POKUS_API_HOSTNAME=localhost
+export POKUS_API_PORT_NO=3000
+
+export POKUS_UPLOADS=$(pwd)/pokus_uploads
+export POKUS_GITOPS=$(pwd)/pokus_gitops
 
 #
 # Invocation du endpoint /files/uploadFile
@@ -100,25 +130,26 @@ export POKUS_API_PORT_NO=80
 mkdir -p ./ptitestespace
 echo 'ceci est un magnifique fichier que j ai edité' > ./ptitestespace/autrefichier.pokus
 
-export CHEMIN_FICHIER_DS_GIT_REPO=ptitestespace/rep1/rep2/autrefichier.pokus
+export CHEMIN_FICHIER_DS_GIT_REPO=exemple/rep1/rep2/autrefichier.pokus
 export CHEMIN_LOCAL_FICHIER=./ptitestespace/autrefichier.pokus
 
 curl -L -X POST -F "fichierSousEdition=@\"$CHEMIN_LOCAL_FICHIER\""  -F "cheminRepoGitFichierSousEdition=\"$CHEMIN_FICHIER_DS_GIT_REPO\"" http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/files/uploadFile | jq .
 
 #
-# Invocation du endpoint /
+# Invocation GET du endpoint [/]
 #
 curl -L -X GET http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1 | jq .
 
 #
-# Invocation du endpoint /msg
+# Invocation GET du endpoint [/msg]
+#
 curl -L -X GET http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/msg | jq .
-
 ```
+
 * Invocation testée du endpoint `api/v1/files/uploadFile` Ici, en ajoutant le paramètre de formulaire _http multipart_ `cheminRepoGitFichierSousEdition`, ait pour valeur le chemin du sous-répertoire de `workspace/pokus`, dans lequel on veut enregistrer le fichier sur le serveur :
 
 ```bash
-curl -L -X POST -F 'fichierSousEdition=@"./ptitestespace/autrefichier.pokus"'  -F 'cheminRepoGitFichierSousEdition="./ptitestespace/"' http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/files/uploadFile
+curl -L -X POST -F 'fichierSousEdition=@"./ptitestespace/autrefichier.pokus"'  -F 'cheminRepoGitFichierSousEdition="./ptitestespace/autrefichier.pokus"' http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/files/uploadFile
 # pour l'instant, les fichiers sont tous enregistrés dansle sous-répertoire 'workspace/pokus/subfolder1'
 ```
 
@@ -126,8 +157,8 @@ curl -L -X POST -F 'fichierSousEdition=@"./ptitestespace/autrefichier.pokus"'  -
 
 TOP TODO :
 
-* faire le endpoint qui va chercher un fichier, lire dedans, et renvoyer le contenu texte au client `Angular` .
-* pour lire ecrireds fichiers en TypeScript: https://stackoverflow.com/questions/33643107/read-and-write-a-text-file-in-typescript
+* Faire le endpoint qui va chercher un fichier, lire dedans, et renvoyer le contenu texte au client `Angular` .
+* Pour lire ecrire ds fichiers en `TypeScript`: https://stackoverflow.com/questions/33643107/read-and-write-a-text-file-in-typescript
 
 
 ## Install

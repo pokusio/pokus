@@ -1,4 +1,5 @@
-FROM node:8.16.2-stretch
+FROM node:14.5.0-stretch-slim
+# FROM node:8.16.2-stretch
 # FROM docker.pegasusio.io/pokus/pokus:0.0.1
 
 LABEL product="pokus"
@@ -48,6 +49,11 @@ ENV POKUS_UPLOADS=$POKUS_UPLOADS
 ARG POKUS_GITOPS=$POKUS_WKSP
 ENV POKUS_GITOPS=$POKUS_GITOPS
 
+ARG MULTER_VERSION
+ENV MULTER_VERSION=${MULTER_VERSION}
+
+ARG TSOA_VERSION
+ENV TSOA_VERSION=${TSOA_VERSION}
 
 # ---
 # IAAC cycle Parameters

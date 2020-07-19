@@ -19,9 +19,10 @@ export class FilesController {
   @Post('uploadFile')
   public async uploadFile(@Request() request: express.Request): Promise<any> {
 
-    let pokusStorageOnDisk = await this.handleFile(request, request.body.cheminRepoGitFichierSousEdition);
+    let pokusStorageOnDisk: any = await this.handleFile(request, request.body.cheminRepoGitFichierSousEdition);
     // file will be in request.fichierSousEdition, it is a buffer
     console.log ('J ai invoque le endpoint upload file');
+    console.log("DAns la requête HTTP a été trouvée le paramètre [cheminRepoGitFichierSousEdition]=" + "[" + request.body.cheminRepoGitFichierSousEdition +"]");
     let cheminFichierDansGitRepoPre = request.body.cheminRepoGitFichierSousEdition;
     let cheminFichierDansGitRepo = cheminFichierDansGitRepoPre.replace(/"/g,'');
     let cheminCOMPLETFichierDansGitRepo = process.env.POKUS_GITOPS + '/' + cheminFichierDansGitRepo;
@@ -36,16 +37,16 @@ export class FilesController {
     console.log(" Valeur [cheminCOMPLETRepertoireDansGitRepo] = [" + cheminCOMPLETRepertoireDansGitRepo + "]");
     // on créée le répêrtoire [cheminCOMPLETRepertoireDansGitRepo] s'il n'existe pas
     // Run external tool synchronously
-    
+
     //check : /pokus/server/uploads/ = process.env.POKUS_GITOPS = " + process.env.POKUS_GITOPS + " "
     console.log("Verif du contenu du répertoire /pokus/server/uploads/ = process.env.POKUS_UPLOADS = " + process.env.POKUS_UPLOADS + "" );
-    
+
     if (shell.exec("ls -allh " + process.env.POKUS_UPLOADS + " ").code !== 0) {
       console.log("Error displaying folder content of [" + process.env.POKUS_UPLOADS + "] ");
       shell.exit(1);
     }
 
-    
+
     if (shell.exec("mkdir -p " + cheminCOMPLETRepertoireDansGitRepo).code !== 0) {
       shell.echo("Error creating folder [" + cheminCOMPLETRepertoireDansGitRepo + "]");
       shell.exit(1);
@@ -87,6 +88,7 @@ export class FilesController {
         // console.log(" [multer.diskStorage#filename] Valeur generee : [" + file.fieldname + '-' + Date.now() + path.extname(file.originalname) + "]");
         // console.log(" [multer.diskStorage#filename] Valeur file.originalname : [" + file.originalname + "]");
         // console.log(" [multer.diskStorage#filename] Valeur path.extname(file.originalname) : [" + path.extname(file.originalname) + "]");
+        console.log(" [handleFile] -> process.env.POKUS_GITOPS = [" + process.env.POKUS_GITOPS + "]");
         cb(null, file.originalname);
       }
     });
@@ -128,6 +130,7 @@ export class FilesController {
   public async loadTextFileToIDE(chemin: string): Promise<any> {
     console.log(" [loadtext] -> chemin = [" + chemin + "]");
     let cheminCOMPLETFichier = process.env.POKUS_GITOPS + '/' + chemin.split('=').pop();
+    console.log(" [loadtext] -> process.env.POKUS_GITOPS = [" + process.env.POKUS_GITOPS + "]");
     let leTexte = fs.readFile(path.join(process.env.POKUS_GITOPS + '/' + chemin.split('=').pop()), (err, data) => {
         if (err) throw err;
         console.log(data);
