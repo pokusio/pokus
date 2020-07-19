@@ -38,6 +38,7 @@ tsoa routes
 npm run build
 npm run server
 ```
+
 * Suite au démarrage du serveur, on aura une réponse API en requêtant en GET :
 
 ```bash
