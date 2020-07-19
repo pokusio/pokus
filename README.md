@@ -26,30 +26,8 @@ atom .
 
 ## Brouillon: build n run
 
-super tuto angular rest api JWT auth https://www.toptal.com/angular/angular-6-jwt-authentication
+_super tuto angular rest api JWT auth https://www.toptal.com/angular/angular-6-jwt-authentication_
 
-### Build : private infra
-
-```bash
-
-npm install
-
-tsoa routes
-npm run build
-npm run server
-```
-
-* Suite au démarrage du serveur, on aura une réponse API en requêtant en GET :
-
-```bash
-#
-export POKUS_API_HOSTNAME=poste-devops-typique
-export POKUS_API_PORT_NO=3000
-
-curl -X GET http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1 | jq .
-curl -X GET http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/msg | jq .
-
-```
 
 ### Build
 
@@ -117,6 +95,19 @@ npm install
 tsoa routes
 npm run build
 npm run server
+
+```
+
+* Suite au démarrage du serveur, on aura une réponse API en requêtant en GET :
+
+```bash
+#
+export POKUS_API_HOSTNAME=orthehostnameofanyvm
+export POKUS_API_HOSTNAME=localhost
+export POKUS_API_PORT_NO=3000
+
+curl -X GET http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1 | jq .
+curl -X GET http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/msg | jq .
 
 ```
 

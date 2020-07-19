@@ -5,7 +5,7 @@ import * as path from 'path';
 import * as multer from 'multer';
 import * as bodyParser from 'body-parser';
 
-const workspacepath = process.env.POKUS_WKSP
+const workspacepath: string = process.env.POKUS_WKSP
 
 const app = express();
 const port = 3000;

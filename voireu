@@ -1,8 +1,0 @@
-{
-  "msg": "J ai invoque le endpoint upload file",
-  "cheminFichierDansGitRepo": "\"./ptitestespace/autrefichier.pokus\""
-}
-{
-  "msg": "J ai invoque le endpoint upload file",
-  "cheminFichierDansGitRepo": "${cheminFichierDansGitRepo}"
-}
