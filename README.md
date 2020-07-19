@@ -51,7 +51,39 @@ curl -X GET http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/msg | jq .
 
 ```
 
-### Build : Sur [Katacoda.com] / [NodeJS] playground
+### Build
+
+* Dans un environnement :
+
+```bash
+# --
+jbl@poste-devops-jbl-16gbram:~/pokus.dev$ node --version
+v14.4.0
+jbl@poste-devops-jbl-16gbram:~/pokus.dev$ npm --version
+6.14.5
+jbl@poste-devops-jbl-16gbram:~/pokus.dev$ yarn --version
+1.22.4
+jbl@poste-devops-jbl-16gbram:~/pokus.dev$ npm list --depth 0 -g tsoa
+/usr/lib
+└── tsoa@3.2.1
+
+jbl@poste-devops-jbl-16gbram:~/pokus.dev$ npm list --depth 1 -g tsoa
+/usr/lib
+└── tsoa@3.2.1
+
+jbl@poste-devops-jbl-16gbram:~/pokus.dev$ npm list --depth 0 -g multer
+/usr/lib
+└── multer@1.4.2
+
+jbl@poste-devops-jbl-16gbram:~/pokus.dev$ npm list --depth 1 -g multer
+/usr/lib
+└── multer@1.4.2
+
+jbl@poste-devops-jbl-16gbram:~/pokus.dev$
+
+```
+
+* exécuter :
 
 ```bash
 export URI_REPO=https://github.com/Jean-Baptiste-Lasselle/fwdkatacoda.git
@@ -87,6 +119,7 @@ npm run build
 npm run server
 
 ```
+
 * Suite au démarrage du serveur, on aura une réponse API en requêtant en GET :
 
 ```bash
