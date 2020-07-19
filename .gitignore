@@ -1,0 +1,4 @@
+# build phase created directories
+dist/
+build/
+node_modules/

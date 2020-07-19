@@ -1,29 +1,25 @@
 {
-  "swagger": {
-    "basePath": "/api/v1",
-    "entryFile": "./src/main.ts",
+  "entryFile": "src/main.ts",
+  "noImplicitAdditionalProperties": "throw-on-extras",
+  "controllerPathGlobs": ["./src/controllers/**/*controller.ts"],
+  "specMerging": "recursive",
+  "spec": {
+    "outputDirectory": "build",
     "specVersion": 3,
-    "outputDirectory": "./api/dist",
-    "controllerPathGlobs": [
-      "./src/controllers/**/*controller.ts"
-    ],
-    "specMerging": "recursive",
-    "spec": {
-      "paths": {
-        "/files/uploadFile": {
-          "post": {
-            "consumes": [
-              "multipart/form-data"
-            ],
-            "parameters": [
-              {
-                "in": "formData",
-                "name": "randomFileIsHere",
-                "required": true,
-                "type": "file"
-              }
-            ]
-          }
+    "paths": {
+      "/files/uploadFile": {
+        "post": {
+          "consumes": [
+            "multipart/form-data"
+          ],
+          "parameters": [
+            {
+              "in": "formData",
+              "name": "randomFileIsHere",
+              "required": true,
+              "type": "file"
+            }
+          ]
         }
       }
     }

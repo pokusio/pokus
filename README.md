@@ -27,7 +27,7 @@ atom .
 ## Brouillon: build n run
 
 super tuto angular rest api JWT auth https://www.toptal.com/angular/angular-6-jwt-authentication
- 
+
 ### Build : private infra
 
 ```bash
@@ -49,6 +49,7 @@ curl -X GET http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1 | jq .
 curl -X GET http://$POKUS_API_HOSTNAME:$POKUS_API_PORT_NO/api/v1/msg | jq .
 
 ```
+
 ### Build : Sur [Katacoda.com] / [NodeJS] playground
 
 ```bash
@@ -78,7 +79,7 @@ export GITOPS_REPO=https://github.com/Jean-Baptiste-Lasselle/hugoify.git
 # export GITOPS_REPO=git@github.com:Jean-Baptiste-Lasselle/hugoify.git
 
 git clone $GITOPS_REPO $POKUS_GITOPS
-
+npm i -g tsoa path multer
 npm install
 tsoa routes
 npm run build
