@@ -4,6 +4,7 @@ import * as multer from 'multer';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as shell from 'shelljs';
+import * as dtree from 'directory-tree';
 import { GitRepo } from "../models/GitRepo";
 import { GitRepoService } from "../models/GitRepoService";
 
@@ -25,6 +26,17 @@ export class GitRepoController {
     return new GitRepoService().get(repoUid);
   }
 
+  /**
+   *
+   * Gets the currently loaded git repo's folder tree structure
+   *
+   **/
+  @Get("current/tree")
+  public async getGitRepoTree(): Promise<dtree.DirectoryTree> {
+
+    const tree = dtree(process.env.POKUS_GITOPS);
+    return tree;
+  }
 
   // https://scotch.io/tutorials/express-file-uploads-with-multer
   // https://stackabuse.com/handling-file-uploads-in-node-js-with-expres-and-multer/
