@@ -1,4 +1,5 @@
 import { GitRepo } from "../models/GitRepo";
+import * as dtree from 'directory-tree';
 
 // A post request should not contain any repo uid. or ssh_uri
 export type GitRepoCreationParams = Pick<GitRepo, "name" | "description" | "https_uri">;
@@ -18,7 +19,10 @@ export class GitRepoService {
     };
 
   }
-
+  public getCurrentRepoTree(): Object {
+    const tree = dtree(process.env.POKUS_GITOPS);
+    return tree; // inside the 'src/models/git' folder
+  }
   public create(gitRepoCreationParams: GitRepoCreationParams): GitRepo {
     // TODO : create the entry in the mongo db database, so that repo is considered created
     return     {
