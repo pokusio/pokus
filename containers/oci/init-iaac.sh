@@ -64,7 +64,7 @@ touch ~/.ssh/known_hosts
 ssh-keygen -R $PIPELINE_GIT_SERVICE_PROVIDER_HOSTNAME
 ssh-keyscan -H $PIPELINE_GIT_SERVICE_PROVIDER_HOSTNAME >> ~/.ssh/known_hosts
 
-echo " JBL - [cat ~/.ssh/known_hosts]"
+echo " jbl - [cat ~/.ssh/known_hosts]"
 cat ~/.ssh/known_hosts
 
 echo " debug jbl"

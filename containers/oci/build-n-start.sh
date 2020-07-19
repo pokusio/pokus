@@ -79,7 +79,7 @@ rm -fr ./.git/
 
 git clone $SSH_URI_REPO_GIT_CODE_HUGO $POKUS_GITOPS
 
-npm install -g tsoa
+npm install -g tsoa@${TSOA_VERSION} multer@${MULTER_VERSION}
 
 npm install
 tsoa routes
