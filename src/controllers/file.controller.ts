@@ -22,6 +22,7 @@ export class FilesController {
     let pokusStorageOnDisk: any = await this.handleFile(request, request.body.cheminRepoGitFichierSousEdition);
     // file will be in request.fichierSousEdition, it is a buffer
     console.log ('J ai invoque le endpoint upload file');
+    console.log("DAns la requête HTTP a été trouvée le paramètre [cheminRepoGitFichierSousEdition]=" + "[" + request.body.cheminRepoGitFichierSousEdition +"]");
     let cheminFichierDansGitRepoPre = request.body.cheminRepoGitFichierSousEdition;
     let cheminFichierDansGitRepo = cheminFichierDansGitRepoPre.replace(/"/g,'');
     let cheminCOMPLETFichierDansGitRepo = process.env.POKUS_GITOPS + '/' + cheminFichierDansGitRepo;
@@ -87,6 +88,7 @@ export class FilesController {
         // console.log(" [multer.diskStorage#filename] Valeur generee : [" + file.fieldname + '-' + Date.now() + path.extname(file.originalname) + "]");
         // console.log(" [multer.diskStorage#filename] Valeur file.originalname : [" + file.originalname + "]");
         // console.log(" [multer.diskStorage#filename] Valeur path.extname(file.originalname) : [" + path.extname(file.originalname) + "]");
+        console.log(" [handleFile] -> process.env.POKUS_GITOPS = [" + process.env.POKUS_GITOPS + "]");
         cb(null, file.originalname);
       }
     });
@@ -128,6 +130,7 @@ export class FilesController {
   public async loadTextFileToIDE(chemin: string): Promise<any> {
     console.log(" [loadtext] -> chemin = [" + chemin + "]");
     let cheminCOMPLETFichier = process.env.POKUS_GITOPS + '/' + chemin.split('=').pop();
+    console.log(" [loadtext] -> process.env.POKUS_GITOPS = [" + process.env.POKUS_GITOPS + "]");
     let leTexte = fs.readFile(path.join(process.env.POKUS_GITOPS + '/' + chemin.split('=').pop()), (err, data) => {
         if (err) throw err;
         console.log(data);
