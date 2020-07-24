@@ -10,6 +10,30 @@ The distributed, scalable Content Manager for hugo.
 
 # IAAC
 
+* If I do a standard IAAC initialization :
+
+```bash
+export DEV_HOME=~/pokus.dev
+export URI_GIT=git@gitlab.com:second-bureau/pegasus/pokus/pokus.git
+export FEATURE_ALIAS='git_tree_endpoint'
+
+git clone ${URI_GIT} ${DEV_HOME}
+cd ${DEV_HOME}
+
+git flow init --defaults
+
+git checkout "feature/${FEATURE_ALIAS}"
+
+export COMMIT_MESSAGE="feat(${FEATURE_ALIAS}): adding iaac cycle to [./README.md]"
+
+git add --all && git commit -m "${COMMIT_MESSAGE}" && git push -u origin HEAD
+
+atom .
+
+```
+
+* If I use the `ìnitializeIAAC` bash function of mine :
+
 ```bash
 export WORK_FOLDER=~/pokus.dev
 export SSH_URI_TO_THIS_REPO=git@gitlab.com:second-bureau/pegasus/pokus/pokus.git
