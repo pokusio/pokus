@@ -1,0 +1,18 @@
+kind: pipeline
+# you could have [type: kubernetes]
+type: docker
+name: default
+
+steps:
+- name: testpipeline1
+  image: alpine
+  commands:
+  - echo 'This'
+  - echo 'is'
+  - echo 'Pokus!'
+- name: testpipeline2
+  image: alpine
+  commands:
+  - echo "We are in [$(pwd)]"
+  - ls -allh
+  - echo 'ok!'
