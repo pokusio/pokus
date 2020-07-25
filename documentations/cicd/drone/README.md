@@ -104,6 +104,10 @@ helm install pegasus-drone ${HELM_LOCAL_PKG} --set env.DRONE_SERVER_HOST=pegassu
   * `DRONE_SERVER_HOST` : Required string value provides your external hostname or IP address. If using an IP address you may include the port. For example, drone.domain.com
   * `DRONE_SERVER_PROTO` : Required string value provides your external protocol scheme. This value should be set to http or https. This field defaults to https if you configure ssl or acme.
 
+# Going Inlets
+
+I'll do that using AWS (I do not trust enough digital Ocean yet to give them my credit card, and I already gave it to `AWS`)
+
 # Drone Gitea
 
 I want to try and switch to gitea, which is mush lighter than `gitlab ce`.
