@@ -87,7 +87,8 @@ export MY_DRONE_GITEA_CLIENT_SECRET=Yk3IE9u0IByHLbF3wXUvKQqXqiHgCcQuTyJ3YCMpVcc=
 
 export MY_DRONE_RPC_SECRET=anythingcomplicatedtoguessandrandomlygenerated
 
-helm install pegasus-drone ${HELM_LOCAL_PKG} --set env.DRONE_SERVER_HOST=drone.pegassusio.io,env.DRONE_SERVER_PROTO=http,env.DRONE_RPC_SECRET=${MY_DRONE_RPC_SECRET},env.DRONE_GITLAB_CLIENT_ID=${MY_DRONE_GITLAB_CLIENT_ID},env.DRONE_GITLAB_CLIENT_SECRET=${MY_DRONE_GITLAB_CLIENT_SECRET}
+# helm install pegasus-drone ${HELM_LOCAL_PKG} --set env.DRONE_SERVER_HOST=drone.pegassusio.io,env.DRONE_SERVER_PROTO=http,env.DRONE_RPC_SECRET=${MY_DRONE_RPC_SECRET},env.DRONE_GITLAB_CLIENT_ID=${MY_DRONE_GITLAB_CLIENT_ID},env.DRONE_GITLAB_CLIENT_SECRET=${MY_DRONE_GITLAB_CLIENT_SECRET}
+helm install pegasus-drone ${HELM_LOCAL_PKG} --set env.DRONE_SERVER_HOST=drone.pegassusio.io,env.DRONE_SERVER_PROTO=http,env.DRONE_RPC_SECRET=${MY_DRONE_RPC_SECRET},env.DRONE_GITLAB_CLIENT_ID=${MY_DRONE_GITEA_CLIENT_ID},env.DRONE_GITLAB_CLIENT_SECRET=${MY_DRONE_GITEA_CLIENT_SECRET}
 
 # Now also adding Ingress for drone, so that Traefik picks it up, to expose it through our Inlets Load Balancer
 
