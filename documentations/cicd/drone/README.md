@@ -388,7 +388,7 @@ Events:            <none>
 
 I opened an issue on the subject : https://gitlab.com/gitlab-org/gitlab/-/issues/231603
 
-* Finally, I also tried the gitea integration, and I get the same error obviously (so is there anything wrong with my redirect uri ? what?)
+* Finally, I also tried the `gitea` integration, and I get the same error obviously (so is there anything wrong with my redirect uri ? what?)
 
 ![same error on gitea](documentations/images/impr.ecran/inlets/SAME_ERROR_WITH_GITEA_THAN_WITH_GITLAB_ON_REDIRECT_URI_2020-07-25T06-27-05.026Z.png)
 
