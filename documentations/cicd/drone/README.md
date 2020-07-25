@@ -106,7 +106,18 @@ helm install pegasus-drone ${HELM_LOCAL_PKG} --set env.DRONE_SERVER_HOST=pegassu
 
 # Going Inlets
 
+* https://blog.alexellis.io/ingress-for-your-local-kubernetes-cluster/
+* see also to customize fro AWS : https://github.com/inlets/inlets-operator#using-a-provider-which-requires-an-access-key-and-secret-key-aws-ec2-scaleway
+
 I'll do that using AWS (I do not trust enough digital Ocean yet to give them my credit card, and I already gave it to `AWS`)
+
+```bash
+# install arkade cli
+curl -sSL https://dl.get-arkade.dev | sudo sh
+
+# inlets operator
+arkade install inlets-operator --help
+```
 
 # Drone Gitea
 
