@@ -115,8 +115,15 @@ I'll do that using AWS (I do not trust enough digital Ocean yet to give them my 
 # install arkade cli
 curl -sSL https://dl.get-arkade.dev | sudo sh
 
-# inlets operator
 arkade install inlets-operator --help
+
+# inlets operator provisioning on AWS
+arkade install inlets-operator \
+ --provider ec2 \
+ --region eu-west-1 \
+ --token-file $HOME/Downloads/access-key \
+ --secret-key-file $HOME/Downloads/secret-access-key \
+ --license $(cat $HOME/inlets-pro-license.txt)
 ```
 
 # Drone Gitea
