@@ -74,6 +74,9 @@ export HELM_RELEASE_NAME=pegasus-drone
 kubectl delete -f charts/charts/drone/drone-ingress.yaml
 helm delete ${HELM_RELEASE_NAME}
 
+# wait a couple of seconds so that helm delete has completed in peace
+sleep 3s
+
 export HELM_LOCAL_PKG=$(helm package charts/charts/drone | awk '{print $NF}')
 
 export MY_DRONE_SERVER_HOST=pegassusio.io
@@ -384,6 +387,10 @@ Events:            <none>
 ![final Gitlab Application error redirect uri not valid](documentations/images/impr.ecran/inlets/FINAL_GITLAB_APPLICATION_ERROR_2020-07-25T05-01-11.215Z.png)
 
 I opened an issue on the subject : https://gitlab.com/gitlab-org/gitlab/-/issues/231603
+
+* Finally, I also tried the gitea integration, and I get the same error obviously (so is there anything wrong with my redirect uri ? what?)
+
+![same error on gitea](documentations/images/impr.ecran/inlets/SAME_ERROR_WITH_GITEA_THAN_WITH_GITLAB_ON_REDIRECT_URI_2020-07-25T06-27-05.026Z.png)
 
 _And the IAM users_
 
