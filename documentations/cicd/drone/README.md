@@ -376,9 +376,10 @@ Events:            <none>
 
 ![final Gitlab Application error redirect uri not valid](documentations/images/impr.ecran/inlets/FINAL_GITLAB_APPLICATION_ERROR_2020-07-25T05-01-11.215Z.png)
 
-* I also finally note about my operations to provision inlets, that I used direct AWS security credentials, aand that is bad, instead I shoould : create an AWS IAM Role, which has enough permissiosn to create EC2 instances and do the `Kubernetes External DNS` thing (the `inlets` `AWS IAM Role`?), and after that, create a `pegasusio` IAM user which will be alowed to assume `inlets` role
-* All in all I still have one problem with inlets : it is a tunnel, and the free part does not support all TLS options (so no way can it be secured).
+_And the IAM users_
 
+* I also finally note about my operations to provision inlets, that I used direct AWS security credentials, aand that is bad, instead I shoould : create an AWS IAM Role, which has enough permissiosn to create EC2 instances and do the `Kubernetes External DNS` thing (the `inlets` `AWS IAM Role`?), and after that, create a `pegasusio` IAM user which will be alowed to assume `inlets` role
+* All in all I still have one problem with inlets : it is a tunnel, and the free part does not support all TLS options (so no way can it be secured). In paticular, Oauth2 has to finally use an un protected `http://` `redirect_uri`, instead of an `https://`.
 
 
 
