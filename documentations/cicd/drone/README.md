@@ -113,28 +113,186 @@ I'll do that using AWS (I do not trust enough digital Ocean yet to give them my 
 
 ```bash
 # create secret files
-export YOUR_AWS_ACCESS_KEY=xxx
-export YOUR_AWS_SECRET_ACCESS_KEY=xxx
+export YOUR_AWS_ACCESS_KEY=AKIAJJMKFWNIVPS2Q22Q
+export YOUR_AWS_SECRET_ACCESS_KEY=HIQM11SqGDMZCzDXDejF2eYKwpIaMD9lYELAbK2i
 
-touch $HOME/Downloads/access-key
-touch $HOME/Downloads/secret-access-key
+mkdir -p $HOME/inlets-operator/secrets/aws
+touch $HOME/inlets-operator/secrets/aws/access-key
+touch $HOME/inlets-operator/secrets/aws/secret-access-key
 
-echo "${YOUR_AWS_ACCESS_KEY}" > $HOME/Downloads/access-key
-echo "${YOUR_AWS_SECRET_ACCESS_KEY}" > $HOME/Downloads/secret-access-key
+echo "${YOUR_AWS_ACCESS_KEY}" > $HOME/inlets-operator/secrets/aws/access-key
+echo "${YOUR_AWS_SECRET_ACCESS_KEY}" > $HOME/inlets-operator/secrets/aws/secret-access-key
 
 # install arkade cli
 curl -sSL https://dl.get-arkade.dev | sudo sh
 
 arkade install inlets-operator --help
 
-# inlets operator provisioning on AWS
+# inlets operator provisioning on AWS for the inlets free version
 arkade install inlets-operator \
  --provider ec2 \
  --region eu-west-1 \
- --token-file $HOME/Downloads/access-key \
- --secret-key-file $HOME/Downloads/secret-access-key \
- --license $(cat $HOME/inlets-pro-license.txt)
+ --token-file $HOME/inlets-operator/secrets/aws/access-key \
+ --secret-key-file $HOME/inlets-operator/secrets/aws/secret-access-key
 ```
+* Well, holy s***t it works !
+  * arkade deployment went just fine
+  * after a while my traefik ingress controller gets an `External IP` Address
+  * I do see the AWS instance VM that was created by inlets :
+
+![Inlets operator created AWS EC2 instance](documentations/images/impr.ecran/inlets/INLETS_OPERATOR_AWS_CREATED_EC2_INSTANCE_VM_2020-07-25T03-13-03.079Z.png)
+
+  * I do also see traefikl mentioned in my inlets-operator logs :
+
+```bash
+# --- #
+
+
+```
+
+  * But most importantly this is how I  tested it does work :) :
+
+```bash
+jbl@pegasusio:~$ kubectl get all,nodes --all-namespaces|grep traefik
+kube-system   pod/helm-install-traefik-528vr                    0/1     Completed   0          10h
+kube-system   pod/svclb-traefik-cdm97                           2/2     Running     0          10h
+kube-system   pod/svclb-traefik-shf4q                           2/2     Running     0          10h
+kube-system   pod/svclb-traefik-kvgbw                           2/2     Running     0          10h
+kube-system   pod/svclb-traefik-p785x                           2/2     Running     0          10h
+kube-system   pod/svclb-traefik-r7szm                           2/2     Running     0          10h
+kube-system   pod/svclb-traefik-pnhsj                           2/2     Running     0          10h
+kube-system   pod/svclb-traefik-94ll6                           2/2     Running     0          10h
+kube-system   pod/svclb-traefik-td5mv                           2/2     Running     0          10h
+kube-system   pod/svclb-traefik-kgd46                           2/2     Running     0          10h
+kube-system   pod/svclb-traefik-2xwfm                           2/2     Running     0          10h
+kube-system   pod/traefik-ingress-controller-78b4959fdf-tfz7k   1/1     Running     0          10h
+kube-system   pod/traefik-758cd5fc85-jkhgg                      1/1     Running     0          10h
+kube-system   pod/traefik-tunnel-client-68b7c5787b-jcqc9        1/1     Running     0          15m
+kube-system   service/traefik-prometheus        ClusterIP      10.43.35.96     <none>                     9100/TCP                      10h
+kube-system   service/traefik-ingress-service   NodePort       10.43.39.199    <none>                     80:31481/TCP,8080:30210/TCP   10h
+kube-system   service/traefik-web-ui            ClusterIP      10.43.206.216   <none>                     80/TCP                        10h
+kube-system   service/traefik                   LoadBalancer   10.43.235.70    172.18.0.7,18.203.92.141   80:31098/TCP,443:31896/TCP    10h
+kube-system   daemonset.apps/svclb-traefik   10        10        10      10           10          <none>          10h
+kube-system   deployment.apps/traefik-ingress-controller   1/1     1            1           10h
+kube-system   deployment.apps/traefik                      1/1     1            1           10h
+kube-system   deployment.apps/traefik-tunnel-client        1/1     1            1           15m
+kube-system   replicaset.apps/traefik-ingress-controller-78b4959fdf   1         1         1       10h
+kube-system   replicaset.apps/traefik-758cd5fc85                      1         1         1       10h
+kube-system   replicaset.apps/traefik-tunnel-client-68b7c5787b        1         1         1       15m
+kube-system   job.batch/helm-install-traefik   1/1           24s        10h
+jbl@pegasusio:~$ curl http://18.203.92.141/
+<html>
+  <head>
+    <style>
+      html {
+        background: url(./bg.png) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+      }
+
+      h1 {
+        font-family: Arial, Helvetica, sans-serif;
+        background: rgba(187, 187, 187, 0.5);
+        width: 3em;
+        padding: 0.5em 1em;
+        margin: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Stilton</h1>
+  </body>
+</html>
+jbl@pegasusio:~$ curl http://wensleydale.minikube/
+<html>
+  <head>
+    <style>
+      html {
+        background: url(./bg.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+      }
+
+      h1 {
+        font-family: Arial, Helvetica, sans-serif;
+        background: rgba(187, 187, 187, 0.5);
+        width: 6em;
+        padding: 0.5em 1em;
+        margin: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Wensleydale</h1>
+  </body>
+</html>
+jbl@pegasusio:~$ curl http://cheddar.minikube/
+<html>
+  <head>
+    <style>
+      html {
+        background: url(./bg.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+      }
+
+      h1 {
+        font-family: Arial, Helvetica, sans-serif;
+        background: rgba(187, 187, 187, 0.5);
+        width: 4em;
+        padding: 0.5em 1em;
+        margin: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Cheddar</h1>
+  </body>
+</html>
+jbl@pegasusio:~$ ping -c 4 cheddar.minikube/
+ping: cheddar.minikube/: Nom ou service inconnu
+jbl@pegasusio:~$ ping -c 4 cheddar.minikube
+PING wensleydale.minikube (18.203.92.141) 56(84) bytes of data.
+^C
+--- wensleydale.minikube ping statistics ---
+2 packets transmitted, 0 received, 100% packet loss, time 1014ms
+
+jbl@pegasusio:~$ cat /etc/hosts
+127.0.0.1	localhost
+127.0.1.1	pegasusio.io	pegasusio
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+
+# Cheesies
+# 192.168.1.34  wensleydale.minikube stilton.minikube  cheddar.minikube
+18.203.92.141 wensleydale.minikube stilton.minikube  cheddar.minikube
+
+```
+* Ok, so now I need to create a traefik ingress route for the drone service (it is not exposed by default) :
+
+```bash
+jbl@pegasusio:~$ kubectl get all |grep drone
+pod/pegasus-drone-79b74b977b-96cbh    1/1     Running   0          105m
+service/pegasus-drone   ClusterIP   10.43.84.203    <none>        80/TCP    105m
+deployment.apps/pegasus-drone     1/1     1            1           105m
+replicaset.apps/pegasus-drone-79b74b977b    1         1         1       105m
+```
+
+* And then I can hit drone with a public IP Address.
+* without domain name worries, I can test drone integration to gitlab.com that way
+* And All I will have left to do, aftet that, is to configure the godaddy with an A record manually (and later do that with AWS Route 53 and `Kubernetes External DNS`)
+* I also finally nte about my operations to provision inlets, that I used direct AWS security credentials, aand that is bad, instead I shoould : create an AWS IAM Role, which has enough permissiosn to create EC2 instances and do the `Kubernetes External DNS` thing (the `inlets` `AWS IAM Role`?), and after that, create a `pegasusio` IAM user which will be alowed to assume `inlets` role
+* All in all I still have one problem with inlets : it is a tunnel, and the free part does not support all TLS options (so no way can it be secured).
+
 
 # Drone Gitea
 
