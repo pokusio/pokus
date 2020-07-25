@@ -71,18 +71,40 @@ git clone https://github.com/drone/charts
 
 # 1. If you have not yet installed Drone server, start with the drone chart.
 export HELM_RELEASE_NAME=pegasus-drone
+kubectl delete -f charts/charts/drone/drone-ingress.yaml
 helm delete ${HELM_RELEASE_NAME}
 
 export HELM_LOCAL_PKG=$(helm package charts/charts/drone | awk '{print $NF}')
 
 export MY_DRONE_SERVER_HOST=pegassusio.io
 export MY_DRONE_SERVER_PROTO=https
-export MY_DRONE_GITLAB_CLIENT_ID=672a675bbc75dd307b9b130341dac22b0337ac729b5bc16222f60952ae6b9e2f
-export MY_DRONE_GITLAB_CLIENT_SECRET=b47116e3b75818b03f88d06dd1bf9e86ad9513afb8597716b5f0a5b1c9286fc2
+export MY_DRONE_GITLAB_CLIENT_ID=668bc88517e21ccabc10499f248466fec02e7781e17b62b63e25e1fafcbf0982
+export MY_DRONE_GITLAB_CLIENT_SECRET=d910bb1968b3de37c0c9c9d6d80c08da776cfa7c18b1b5607e7224f8127b7b49
 export MY_DRONE_RPC_SECRET=anythingcomplicatedtoguessandrandomlygenerated
 
-helm install pegasus-drone ${HELM_LOCAL_PKG} --set env.DRONE_SERVER_HOST=pegassusio.io,env.DRONE_SERVER_PROTO=https,env.DRONE_RPC_SECRET=${MY_DRONE_RPC_SECRET},env.DRONE_GITLAB_CLIENT_ID=${MY_DRONE_GITLAB_CLIENT_ID},env.DRONE_GITLAB_CLIENT_SECRET=${MY_DRONE_GITLAB_CLIENT_SECRET}
+helm install pegasus-drone ${HELM_LOCAL_PKG} --set env.DRONE_SERVER_HOST=drone.pegassusio.io,env.DRONE_SERVER_PROTO=http,env.DRONE_RPC_SECRET=${MY_DRONE_RPC_SECRET},env.DRONE_GITLAB_CLIENT_ID=${MY_DRONE_GITLAB_CLIENT_ID},env.DRONE_GITLAB_CLIENT_SECRET=${MY_DRONE_GITLAB_CLIENT_SECRET}
 
+# Now also adding Ingress for drone, so that Traefik picks it up, to expose it through our Inlets Load Balancer
+
+touch charts/charts/drone/drone-ingress.yaml
+
+cat <<EOF >>charts/charts/drone/drone-ingress.yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: pegasus-drone
+spec:
+  rules:
+  - host: drone.pegasusio.io
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: pegasus-drone
+          servicePort: http
+EOF
+
+kubectl apply -f charts/charts/drone/drone-ingress.yaml
 
 ```
 
@@ -141,14 +163,6 @@ arkade install inlets-operator \
   * I do see the AWS instance VM that was created by inlets :
 
 ![Inlets operator created AWS EC2 instance](documentations/images/impr.ecran/inlets/INLETS_OPERATOR_AWS_CREATED_EC2_INSTANCE_VM_2020-07-25T03-13-03.079Z.png)
-
-  * I do also see traefikl mentioned in my inlets-operator logs :
-
-```bash
-# --- #
-
-
-```
 
   * But most importantly this is how I  tested it does work :) :
 
@@ -277,7 +291,7 @@ ff02::2 ip6-allrouters
 18.203.92.141 wensleydale.minikube stilton.minikube  cheddar.minikube
 
 ```
-* Ok, so now I need to create a traefik ingress route for the drone service (it is not exposed by default) :
+* Ok, so now I need to create a traefik ingress route, or a simple ingress (like the cheese apps, for `traefik v1.7`) for the drone service (it is not exposed by default) :
 
 ```bash
 jbl@pegasusio:~$ kubectl get all |grep drone
@@ -287,11 +301,85 @@ deployment.apps/pegasus-drone     1/1     1            1           105m
 replicaset.apps/pegasus-drone-79b74b977b    1         1         1       105m
 ```
 
+* `Ingress` like the traefik's cheese applications :
+
+```Yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: pegasus-drone
+spec:
+  rules:
+  - host: drone.pegasusio.io
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: pegasus-drone
+          servicePort: http
+```
+* holy sh**t it f**g worked ! Now I do have access to the drone using http://drone.pegasusio.io/ , as long as I have in my `/etc/hosts` :
+
+```bash
+# Cheesies
+# 192.168.1.34  wensleydale.minikube stilton.minikube  cheddar.minikube
+18.203.92.141 wensleydale.minikube stilton.minikube  cheddar.minikube
+18.203.92.141 drone.pegasusio.io
+
+```
+* Indeed, to test that, I tried accessing http://drone.pegasusio.io/logout because it does not redirect anywhere), and look, it worked !! (so drone actually now exposed through inlets ^^ ) :
+
+![http://drone.pegasusio.io/logout](./documentations/images/impr.ecran/inlets/DRONE_IS_ACTUALLY_RUNNING_AND_EXPOSED_2020-07-25 05-55-43.png)
+
+* If I try now to access http://drone.pegasusio.io/ , I will stil get an error from gitlab, because the domain name pegasusio.io is not yet configured in my godaddy account for the domain name `pegasusio.io` to match `18.203.92.141` IP.
+
+* Note that in my cluster, consequently to previous operations, I have this :
+
+```bash
+jbl@pegasusio:~$ kubectl get all,nodes --all-namespaces|grep drone
+default       pod/pegasus-drone-79b74b977b-96cbh                1/1     Running     0          125m
+default       service/pegasus-drone             ClusterIP      10.43.84.203    <none>                     80/TCP                        125m
+default       deployment.apps/pegasus-drone                1/1     1            1           125m
+default       replicaset.apps/pegasus-drone-79b74b977b                1         1         1       125m
+jbl@pegasusio:~$ kubectl describe service/pegasus-drone
+Name:              pegasus-drone
+Namespace:         default
+Labels:            app.kubernetes.io/component=server
+                   app.kubernetes.io/instance=pegasus-drone
+                   app.kubernetes.io/managed-by=Helm
+                   app.kubernetes.io/name=drone
+                   app.kubernetes.io/version=1.8.1
+                   helm.sh/chart=drone-0.1.6
+Annotations:       meta.helm.sh/release-name: pegasus-drone
+                   meta.helm.sh/release-namespace: default
+Selector:          app.kubernetes.io/component=server,app.kubernetes.io/instance=pegasus-drone,app.kubernetes.io/name=drone
+Type:              ClusterIP
+IP:                10.43.84.203
+Port:              http  80/TCP
+TargetPort:        http/TCP
+Endpoints:         10.42.9.8:80
+Session Affinity:  None
+Events:            <none>
+```
+
 * And then I can hit drone with a public IP Address.
 * without domain name worries, I can test drone integration to gitlab.com that way
-* And All I will have left to do, aftet that, is to configure the godaddy with an A record manually (and later do that with AWS Route 53 and `Kubernetes External DNS`)
-* I also finally nte about my operations to provision inlets, that I used direct AWS security credentials, aand that is bad, instead I shoould : create an AWS IAM Role, which has enough permissiosn to create EC2 instances and do the `Kubernetes External DNS` thing (the `inlets` `AWS IAM Role`?), and after that, create a `pegasusio` IAM user which will be alowed to assume `inlets` role
+* And All I will have left to do, aftet that, is to configure the godaddy with an A record manually (and later do that with AWS Route 53 and `Kubernetes External DNS`),n and also a CNAME record to add `drone.pegasusio.io` so that http://drone.pegasusio.io hits the same IP  Address :
+
+![Do Daddy configuration A record and CNAME record](documentations/images/impr.ecran/inlets/GODADDY_DNS_CONFIGURATION_DORONE_PEGASUSIO_IO__2020-07-25T04-43-52.246Z.png)
+
+* ok, so now that DNS is setup, I re-created the Gilab OAuth application, like below (and redeployed drone with new Client ID / Client Secret) :
+
+![Re-created Gitlab Application](documentations/images/impr.ecran/inlets/RECREATED_GITLAB_OAUTH_APPLICATION_FOR_DRONE_WITH_DNS_CNAME_RECORD_2020-07-25T04-42-32.141Z.png)
+
+* Even though all configuration seems ok, I still have a final error with the gitlab application :
+
+![final Gitlab Application error redirect uri not valid](documentations/images/impr.ecran/inlets/FINAL_GITLAB_APPLICATION_ERROR_2020-07-25T05-01-11.215Z.png)
+
+* I also finally note about my operations to provision inlets, that I used direct AWS security credentials, aand that is bad, instead I shoould : create an AWS IAM Role, which has enough permissiosn to create EC2 instances and do the `Kubernetes External DNS` thing (the `inlets` `AWS IAM Role`?), and after that, create a `pegasusio` IAM user which will be alowed to assume `inlets` role
 * All in all I still have one problem with inlets : it is a tunnel, and the free part does not support all TLS options (so no way can it be secured).
+
+
 
 
 # Drone Gitea
