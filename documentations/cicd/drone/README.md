@@ -364,7 +364,7 @@ Events:            <none>
 
 * And then I can hit drone with a public IP Address.
 * without domain name worries, I can test drone integration to gitlab.com that way
-* And All I will have left to do, aftet that, is to configure the godaddy with an A record manually (and later do that with AWS Route 53 and `Kubernetes External DNS`),n and also a CNAME record to add `drone.pegasusio.io` so that http://drone.pegasusio.io hits the same IP  Address :
+* And All I will have left to do, after that, is to configure the godaddy with an A record manually (and later do that with AWS Route 53 and `Kubernetes External DNS`),n and also a CNAME record to add `drone.pegasusio.io` so that http://drone.pegasusio.io hits the same IP  Address :
 
 ![Do Daddy configuration A record and CNAME record](documentations/images/impr.ecran/inlets/GODADDY_DNS_CONFIGURATION_DORONE_PEGASUSIO_IO__2020-07-25T04-43-52.246Z.png)
 
@@ -375,6 +375,8 @@ Events:            <none>
 * Even though all configuration seems ok, I still have a final error with the gitlab application :
 
 ![final Gitlab Application error redirect uri not valid](documentations/images/impr.ecran/inlets/FINAL_GITLAB_APPLICATION_ERROR_2020-07-25T05-01-11.215Z.png)
+
+I opened an issue on the subject : https://gitlab.com/gitlab-org/gitlab/-/issues/231603
 
 _And the IAM users_
 
