@@ -92,6 +92,7 @@ helm install pegasus-drone ${HELM_LOCAL_PKG} --set env.DRONE_SERVER_HOST=drone.p
 
 # Now also adding Ingress for drone, so that Traefik picks it up, to expose it through our Inlets Load Balancer
 
+rm charts/charts/drone/drone-ingress.yaml
 touch charts/charts/drone/drone-ingress.yaml
 
 cat <<EOF >>charts/charts/drone/drone-ingress.yaml
