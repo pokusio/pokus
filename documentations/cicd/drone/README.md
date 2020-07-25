@@ -112,6 +112,16 @@ helm install pegasus-drone ${HELM_LOCAL_PKG} --set env.DRONE_SERVER_HOST=pegassu
 I'll do that using AWS (I do not trust enough digital Ocean yet to give them my credit card, and I already gave it to `AWS`)
 
 ```bash
+# create secret files
+export YOUR_AWS_ACCESS_KEY=xxx
+export YOUR_AWS_SECRET_ACCESS_KEY=xxx
+
+touch $HOME/Downloads/access-key
+touch $HOME/Downloads/secret-access-key
+
+echo "${YOUR_AWS_ACCESS_KEY}" > $HOME/Downloads/access-key
+echo "${YOUR_AWS_SECRET_ACCESS_KEY}" > $HOME/Downloads/secret-access-key
+
 # install arkade cli
 curl -sSL https://dl.get-arkade.dev | sudo sh
 
