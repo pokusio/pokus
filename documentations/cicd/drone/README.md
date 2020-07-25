@@ -392,6 +392,8 @@ I opened an issue on the subject : https://gitlab.com/gitlab-org/gitlab/-/issues
 
 ![same error on gitea](documentations/images/impr.ecran/inlets/SAME_ERROR_WITH_GITEA_THAN_WITH_GITLAB_ON_REDIRECT_URI_2020-07-25T06-27-05.026Z.png)
 
+* TODO : Try Drone / Github integration and see if I get the same error
+
 _And the IAM users_
 
 * I also finally note about my operations to provision inlets, that I used direct AWS security credentials, aand that is bad, instead I shoould : create an AWS IAM Role, which has enough permissiosn to create EC2 instances and do the `Kubernetes External DNS` thing (the `inlets` `AWS IAM Role`?), and after that, create a `pegasusio` IAM user which will be alowed to assume `inlets` role
