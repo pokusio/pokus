@@ -393,7 +393,7 @@ I opened an issue on the subject : https://gitlab.com/gitlab-org/gitlab/-/issues
 ![same error on gitea](documentations/images/impr.ecran/inlets/SAME_ERROR_WITH_GITEA_THAN_WITH_GITLAB_ON_REDIRECT_URI_2020-07-25T06-27-05.026Z.png)
 
 * TODO : Try Drone / Github integration and see if I get the same error
-
+* I think I have an explanation see [ANNEX. A `OAuth2` and `TLS`](cccc) : https is required for OAuth2, some part at least, so i'll just go `https` everywhere, especially the drone server here.
 _And the IAM users_
 
 * I also finally note about my operations to provision inlets, that I used direct AWS security credentials, aand that is bad, instead I shoould : create an AWS IAM Role, which has enough permissiosn to create EC2 instances and do the `Kubernetes External DNS` thing (the `inlets` `AWS IAM Role`?), and after that, create a `pegasusio` IAM user which will be alowed to assume `inlets` role
@@ -406,3 +406,72 @@ _And the IAM users_
 I want to try and switch to gitea, which is mush lighter than `gitlab ce`.
 
 Plus, there exists integration between gitea and drone https://docs.drone.io/server/provider/gitea/
+
+# ANNEX. A `OAuth2` and `TLS`
+
+<div class="post-text" itemprop="text">
+<p>The Authorization server is required to use SSL/TLS as per the <a href="http://tools.ietf.org/html/rfc6749">specification</a>, for example:</p>
+
+<blockquote>
+  <p>Since requests to the authorization endpoint result in user
+     authentication and the transmission of clear-text credentials (in the
+     HTTP response), the authorization server MUST require the use of TLS
+     as described in Section 1.6 when sending requests to the
+     authorization endpoint.</p>
+
+  <p>Since requests to the token endpoint result in the transmission of
+     clear-text credentials (in the HTTP request and response), the
+     authorization server MUST require the use of TLS as described in
+     Section 1.6 when sending requests to the token endpoint.</p>
+</blockquote>
+
+<p>That same specification does not <em>require</em> it for the client application, but heavily recommends it:</p>
+
+<blockquote>
+  <p>The redirection endpoint SHOULD require the use of TLS as described
+     in Section 1.6 when the requested response type is "code" or "token",
+     or when the redirection request will result in the transmission of
+     sensitive credentials over an open network.  This specification does
+     not mandate the use of TLS because at the time of this writing,
+     requiring clients to deploy TLS is a significant hurdle for many
+     client developers.  If TLS is not available, the authorization server
+     SHOULD warn the resource owner about the insecure endpoint prior to
+     redirection (e.g., display a message during the authorization
+     request).</p>
+
+  <p>Lack of transport-layer security can have a severe impact on the
+     security of the client and the protected resources it is authorized
+     to access.  The use of transport-layer security is particularly
+     critical when the authorization process is used as a form of
+     delegated end-user authentication by the client (e.g., third-party
+     sign-in service).</p>
+</blockquote>
+
+<p>Calls to the resource server contain the access token and require SSL/TLS:</p>
+
+<blockquote>
+  <p>Access token credentials (as well as any confidential access token
+     attributes) MUST be kept confidential in transit and storage, and
+     only shared among the authorization server, the resource servers the
+     access token is valid for, and the client to whom the access token is
+     issued.  Access token credentials MUST only be transmitted using TLS
+     as described in Section 1.6 with server authentication as defined by
+     [RFC2818].</p>
+</blockquote>
+
+<p>The reasons should be pretty obvious: In any of these does not use secure transport, the token can be intercepted and the solution is not secure.</p>
+
+<p>You question specifically calls out the client application.</p>
+
+<blockquote>
+  <p>Client apps: Is it really necessary, as long as it uses SSL for the resource server communication?</p>
+</blockquote>
+
+<p>I am assuming that you client is a web application, and you are talking about the communication between the browser and the server after authentication has happened. I am furthermore assuming that you ask the question, because (in your implementation), this communication is not authenticated with access tokens, but through some other means.</p>
+
+<p>And there you have your answer: that communication is authenticated in some way or another. How else would the server know who is making the call? Most web sites use a session cookie they set at the beginning of the session, and use that to identify the session and therefor the user. Anyone who can grab that session cookie can hijack the session and impersonate the user. If you don't want that (and you really should not want that), you must use SSL/TLS to secure the communication between the browser and the server.</p>
+
+<p>In some cases, the browser part of the client talks to the resource server directly; and the server part only serves static content, such as HTML, CSS, images and last but not least, JavaScript. Maybe your client is built like this, and you are wondering whether the static content must be downloaded over SSL/TLS? Well, if it isn't, a man in the middle can insert their own evil JavaScript, that steals you user's access tokens. You do want to secure the download of static content.</p>
+
+<p>Last but not least, your question is based on a hidden assumption, that there might be valid reasons not to use SSL/TLS. Often people claim the cost of the certificate is too high, or the encryption requires too much CPU power, hence requiring more hardware to run the application. I do not believe these costs to be significant in virtually all cases. They are very low, compared to the total cost of building and running the solution. They are also very low compared to the risks of not using encryption. Don't spend time (and money) debating this, just use SSL/TLS all the way through.</p>
+    </div>
