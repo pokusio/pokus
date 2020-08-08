@@ -71,18 +71,18 @@ jobs:
       - deploy:
           name: Build and push Docker image
           command: |
-            APIM_VERSION=6.57.45
-            APIM_VERSION=3.1.2
-            GIT_COMMIT_ID=${APIM_VERSION}
+            POKUS_VERSION=6.57.45
+            POKUS_VERSION=3.1.2
+            GIT_COMMIT_ID=${POKUS_VERSION}
             GIT_COMMIT_ID=${CIRCLE_BUILD_NUM}
             TAG="0.0.03-apim-${GIT_COMMIT_ID}"
             pwd
             ls -allh
-            QUAY_BOT_USERNAME=$(secrethub read pok-us-io/apim-gateway/staging/docker/quay/botuser/username)
-            QUAY_BOT_SECRET=$(secrethub read pok-us-io/apim-gateway/staging/docker/quay/botoken/token)
+            QUAY_BOT_USERNAME=$(secrethub read pok-us-io/api/staging/docker/quay/botuser/username)
+            QUAY_BOT_SECRET=$(secrethub read pok-us-io/api/staging/docker/quay/botoken/token)
             echo "QUAY_BOT_USERNAME=[${QUAY_BOT_USERNAME}]"
             echo "QUAY_BOT_SECRET=[${QUAY_BOT_SECRET}]"
-            docker build --no-cache -t "quay.io/pok-us-io/apim-gateway:${TAG}" -f docker/Dockerfile docker/ --build-arg GRAVITEEIO_VERSION=${APIM_VERSION}
+            docker build --no-cache -t "quay.io/pok-us-io/apim-gateway:${TAG}" -f docker/Dockerfile docker/ --build-arg POKUS_VERSION=${POKUS_VERSION}
             docker login -u="${QUAY_BOT_USERNAME}" -p="${QUAY_BOT_SECRET}" quay.io
             docker push "quay.io/pok-us-io/apim-gateway:${TAG}"
             pwd
