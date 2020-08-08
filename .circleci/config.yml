@@ -4,9 +4,13 @@ orbs:
 
 jobs:
   build:
+    context: pokus-dev
     docker:
       # using custom image, see [./.circleci/docker/primary/Dockerfile]
       - image: quay.io/pok-us-io/pokus_api_build:0.0.2
+        auth:
+          username: $POKUS_BOT_QUAY_USERNAME
+          password: $POKUS_BOT_QUAY_TOKEN
     working_directory: /ci.pok-us-io/pipeline/work
 
     environment:
