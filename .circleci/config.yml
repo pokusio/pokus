@@ -91,5 +91,5 @@ workflows:
   build_and_publish:
     jobs:
       - build:
-      - publish
+      - publish:
           context: "pokus-dev"
