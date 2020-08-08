@@ -8,7 +8,7 @@ https://pok-us.io/ _(domain name bought on 22/02/2020 )_
 
 <!--
 
-Could not find how to deal with specific branches
+Could not find how to deal with specific branches, except master, but.. hey you know...
 
 [![Pokus master branch](https://circleci.com/gh/pokusio/pokus/tree/master.svg?style=svg)](vvv)
 

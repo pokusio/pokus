@@ -75,10 +75,10 @@ pokus-devspace  0      1      About an hour ago
 jbl@poste-devops-jbl-16gbram:~/apicurio-studio/distro/docker-compose$ secrethub repo init pok-us-io/api
 Creating repository...
 Create complete! The repository pok-us-io/api is now ready to use.
-jibl@poste-devops-jbl-16gbram:~/apicurio-studio/distro/docker-compose$ echo "BYGREGREGREGEGERGERGERGERGERGERGERGERGERGERGERERGERGERGERGR4" | secrethub write pok-us-io/api/staging/docker/quay/botoken
+jbl@poste-devops-jbl-16gbram:~/apicurio-studio/distro/docker-compose$ echo "BYGREGREGREGEGERGERGERGERGERGERGERGERGERGERGERERGERGERGERGR4" | secrethub write pok-us-io/api/staging/docker/quay/botoken
 Writing secret value...
 Write complete! The given value has been written to pok-us-io/api/staging/docker/quay/botoken:2
-jibl@poste-devops-jbl-16gbram:~/apicurio-studio/distro/docker-compose$ echo "pok-us-io+pokusbot" | secrethub write pok-us-io/api/staging/docker/quay/botusername
+jbl@poste-devops-jbl-16gbram:~/apicurio-studio/distro/docker-compose$ echo "pok-us-io+pokusbot" | secrethub write pok-us-io/api/staging/docker/quay/botusername
 Writing secret value...
 Write complete! The given value has been written to pok-us-io/api/staging/docker/quay/botusername:2
 
@@ -90,3 +90,195 @@ Write complete! The given value has been written to pok-us-io/api/staging/docker
 secrethub service init --permission read pok-us-io/api
 ```
 * And in Circle CI, (in what Circle CI calls a context ) I create and Env variable of name `SECRETHUB_CREDENTIAL` with that token value that I got (with read only access)
+
+
+# The secret Hub audit features
+
+awesome :
+
+```bash
+
+secrethub audit pok-us-io/api/staging/docker/quay/botusername --output-format="json" > myaudit.json
+while read line; do
+# reading each line
+echo $line | jq
+done < myaudit.json
+
+```
+* Look what it gave to me ! :
+
+```bash
+jbl@poste-devops-jbl-16gbram:~/apicurio-studio/distro/docker-compose$ secrethub audit pok-us-io/api/staging/docker/quay/botusername --output-format="json" > myaudit.json
+jbl@poste-devops-jbl-16gbram:~/apicurio-studio/distro/docker-compose$ while read line; do
+> # reading each line
+> echo $line | jq
+> done < myaudit.json
+{
+  "Author": "s-mYXM8Bpi6ZTN",
+  "Date": "2020-08-08T22:30:08Z",
+  "Event": "read.secret",
+  "IPAddress": "54.210.134.154"
+}
+{
+  "Author": "s-mYXM8Bpi6ZTN",
+  "Date": "2020-08-08T22:30:08Z",
+  "Event": "read.secret_version",
+  "IPAddress": "54.210.134.154"
+}
+{
+  "Author": "s-mYXM8Bpi6ZTN",
+  "Date": "2020-08-08T22:30:07Z",
+  "Event": "read.secret",
+  "IPAddress": "54.210.134.154"
+}
+{
+  "Author": "s-mYXM8Bpi6ZTN",
+  "Date": "2020-08-08T22:30:07Z",
+  "Event": "read.secret_version",
+  "IPAddress": "54.210.134.154"
+}
+{
+  "Author": "s-mYXM8Bpi6ZTN",
+  "Date": "2020-08-08T21:59:30Z",
+  "Event": "read.secret",
+  "IPAddress": "3.89.249.61"
+}
+{
+  "Author": "s-mYXM8Bpi6ZTN",
+  "Date": "2020-08-08T21:59:30Z",
+  "Event": "read.secret_version",
+  "IPAddress": "3.89.249.61"
+}
+{
+  "Author": "s-mYXM8Bpi6ZTN",
+  "Date": "2020-08-08T21:59:29Z",
+  "Event": "read.secret",
+  "IPAddress": "3.89.249.61"
+}
+{
+  "Author": "s-mYXM8Bpi6ZTN",
+  "Date": "2020-08-08T21:59:29Z",
+  "Event": "read.secret_version",
+  "IPAddress": "3.89.249.61"
+}
+{
+  "Author": "s-mYXM8Bpi6ZTN",
+  "Date": "2020-08-08T21:42:45Z",
+  "Event": "read.secret",
+  "IPAddress": "184.72.108.119"
+}
+{
+  "Author": "s-mYXM8Bpi6ZTN",
+  "Date": "2020-08-08T21:42:45Z",
+  "Event": "read.secret_version",
+  "IPAddress": "184.72.108.119"
+}
+{
+  "Author": "s-mYXM8Bpi6ZTN",
+  "Date": "2020-08-08T21:42:44Z",
+  "Event": "read.secret",
+  "IPAddress": "184.72.108.119"
+}
+{
+  "Author": "s-mYXM8Bpi6ZTN",
+  "Date": "2020-08-08T21:42:44Z",
+  "Event": "read.secret_version",
+  "IPAddress": "184.72.108.119"
+}
+{
+  "Author": "s-mYXM8Bpi6ZTN",
+  "Date": "2020-08-08T21:40:26Z",
+  "Event": "read.secret",
+  "IPAddress": "3.95.220.70"
+}
+{
+  "Author": "s-mYXM8Bpi6ZTN",
+  "Date": "2020-08-08T21:40:26Z",
+  "Event": "read.secret_version",
+  "IPAddress": "3.95.220.70"
+}
+{
+  "Author": "s-mYXM8Bpi6ZTN",
+  "Date": "2020-08-08T21:40:25Z",
+  "Event": "read.secret",
+  "IPAddress": "3.95.220.70"
+}
+{
+  "Author": "s-mYXM8Bpi6ZTN",
+  "Date": "2020-08-08T21:40:25Z",
+  "Event": "read.secret_version",
+  "IPAddress": "3.95.220.70"
+}
+{
+  "Author": "s-mYXM8Bpi6ZTN",
+  "Date": "2020-08-08T21:25:34Z",
+  "Event": "read.secret",
+  "IPAddress": "3.95.220.70"
+}
+{
+  "Author": "s-mYXM8Bpi6ZTN",
+  "Date": "2020-08-08T21:25:34Z",
+  "Event": "read.secret_version",
+  "IPAddress": "3.95.220.70"
+}
+{
+  "Author": "s-mYXM8Bpi6ZTN",
+  "Date": "2020-08-08T21:25:33Z",
+  "Event": "read.secret",
+  "IPAddress": "3.95.220.70"
+}
+{
+  "Author": "s-mYXM8Bpi6ZTN",
+  "Date": "2020-08-08T21:25:33Z",
+  "Event": "read.secret_version",
+  "IPAddress": "3.95.220.70"
+}
+{
+  "Author": "pokusbot",
+  "Date": "2020-08-08T21:20:17Z",
+  "Event": "create.service",
+  "IPAddress": "86.247.169.244"
+}
+{
+  "Author": "pokusbot",
+  "Date": "2020-08-08T21:15:44Z",
+  "Event": "create.secret_version",
+  "IPAddress": "86.247.169.244"
+}
+{
+  "Author": "pokusbot",
+  "Date": "2020-08-08T21:15:30Z",
+  "Event": "create.secret_version",
+  "IPAddress": "86.247.169.244"
+}
+{
+  "Author": "pokusbot",
+  "Date": "2020-08-08T21:15:11Z",
+  "Event": "create.secret_version",
+  "IPAddress": "86.247.169.244"
+}
+{
+  "Author": "pokusbot",
+  "Date": "2020-08-08T21:15:11Z",
+  "Event": "create.secret",
+  "IPAddress": "86.247.169.244"
+}
+{
+  "Author": "pokusbot",
+  "Date": "2020-08-08T21:14:56Z",
+  "Event": "create.secret_version",
+  "IPAddress": "86.247.169.244"
+}
+{
+  "Author": "pokusbot",
+  "Date": "2020-08-08T21:14:56Z",
+  "Event": "create.secret",
+  "IPAddress": "86.247.169.244"
+}
+{
+  "Author": "pokusbot",
+  "Date": "2020-08-08T21:10:29Z",
+  "Event": "create.repo",
+  "IPAddress": "86.247.169.244"
+}
+```
