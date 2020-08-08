@@ -86,7 +86,7 @@ jobs:
             TAG="${POKUS_VERSION}"
             pwd
             ls -allh
-            docker push "quay.io/pok-us-io/apim-gateway:${TAG}"
+            docker push "quay.io/pok-us-io/pokus-api:${TAG}"
             pwd
 
 workflows:
