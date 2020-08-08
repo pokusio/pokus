@@ -1,4 +1,4 @@
-FROM 14.7.0-alpine3.10
+FROM node:14.7.0-alpine3.10
 
 # COPY . /ci.pok-us-io/pipeline/work
 RUN mkdir -p /ci.pok-us-io/pipeline/work
