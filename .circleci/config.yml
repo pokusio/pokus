@@ -7,9 +7,10 @@ jobs:
     docker:
       # using custom image, see [./.circleci/docker/primary/Dockerfile]
       - image: quay.io/pok-us-io/pokus_api_build:0.0.2
-        auth:
-          username: $POKUS_BOT_QUAY_USERNAME
-          password: $POKUS_BOT_QUAY_TOKEN
+        # if docker image repository required docker login and permissions to docker pull 
+        # auth:
+          # username: $POKUS_BOT_QUAY_USERNAME
+          # password: $POKUS_BOT_QUAY_TOKEN
     working_directory: /ci.pok-us-io/pipeline/work
 
     environment:
@@ -43,6 +44,9 @@ jobs:
       # using custom image, see [./.circleci/docker/primary/Dockerfile] in
       # the pipeline operator https://github.com/pok-us-io/cci-pipeline-operator/issues/1
       - image: quay.io/pok-us-io/pokus_api_oci_build:0.0.2
+        auth:
+          username: $POKUS_BOT_QUAY_USERNAME
+          password: $POKUS_BOT_QUAY_TOKEN
     working_directory: /ci.pok-us-io/pipeline/work
     steps:
       - setup_remote_docker

@@ -1,6 +1,11 @@
 # Pokus
 
-https://pok-us-io/ _(domain name bought on 22/02/2020 )_
+https://pok-us.io/ _(domain name bought on 22/02/2020 )_
+
+[![Docker Repository on Quay](https://quay.io/repository/pok-us-io/pokus_api_oci_build/status "Docker Repository on Quay")](https://quay.io/repository/pok-us-io/pokus_api_oci_build)
+
+
+
 * J'ai acheté le nom de domaine https://pok-us-io/ pour le projet `pokus`, et notamment sa partie `pokus'portus`
 * Organisation `github` : https://github.com/pokus-io
 
