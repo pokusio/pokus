@@ -65,26 +65,6 @@ jobs:
             set -x
             curl -L https://github.com/docker/compose/releases/download/1.11.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
             chmod +x /usr/local/bin/docker-compose
-      - run:
-          name: Unit Testing Pokus API
-          command: |
-            DESIRED_VERSION='feature/add_circleci_yaml'
-            pwd
-            ls -allh
-            docker run -itd --name gravitee_builder maven:3-jdk-11 /bin/bash
-            docker exec -it gravitee_builder sh -c "apt-get update -y && apt-get install -y ca-certificates && rm -fr /var/cache/apt/*  && update-ca-certificates && mvn --version"
-            docker exec -it gravitee_builder sh -c "mkdir -p /ci.pok-us-io/pipeline/work && cd /ci.pok-us-io/pipeline/work && git clone https://github.com/pok-us-io/gravitee-gateway . && git checkout ${DESIRED_VERSION} && pwd && ls -allh ."
-            docker exec -it gravitee_builder sh -c "cd /ci.pok-us-io/pipeline/work && pwd && ls -allh . && mvn clean install"
-      - run:
-          name: Build Pokus API
-          command: |
-            DESIRED_VERSION='feature/add_circleci_yaml'
-            pwd
-            ls -allh
-            # docker run -itd --name gravitee_builder maven:3-jdk-11 /bin/bash
-            docker exec -it gravitee_builder sh -c "mvn --version"
-            # docker exec -it gravitee_builder sh -c "cd /ci.pok-us-io/pipeline/work && git clone https://github.com/pok-us-io/gravitee-gateway . && git checkout ${DESIRED_VERSION} && pwd && ls -allh ."
-            docker exec -it gravitee_builder sh -c "cd /ci.pok-us-io/pipeline/work && pwd && ls -allh /ci.pok-us-io/pipeline/work && mvn clean package --batch-mode -DskipTest"
 
       - checkout
       - secrethub/install
