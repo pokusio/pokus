@@ -15,7 +15,6 @@ jobs:
 
     environment:
       TEST_RESULTS: /ci.pok-us-io/pipeline/tmp/test-results
-
     steps:
       - checkout
       - run:
