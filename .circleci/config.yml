@@ -17,15 +17,16 @@ jobs:
       - run:
           name: Run unit tests
           environment:
-            DATABASE_URL: "someurl"
-            DB_MIGRATIONS: /some/where/db/migrations
+            TSOA_VERSION: "3.2.1"
+            MULTER_VERSION: "1.4.2"
           command: |
             set -ou pipefail
-            mkdir -p $TEST_RESULTS
-            # trap "gravitee-junit-report <${TEST_RESULTS}/gravitee-unit-tests.out > ${TEST_RESULTS}/gravitee-test-report.xml" EXIT
-            # Notice this `set -o pipefail`, this will cause script to fail if `mvn test` fails
-            # without this option script will return success regardless of testing result due to pipe after test command
-            mvn clean test | tee ${TEST_RESULTS}/gravitee-unit-tests.out
+            npm install -g tsoa@${TSOA_VERSION} multer@${MULTER_VERSION}
+
+            npm install
+            tsoa routes
+            npm run build
+
 
       - store_artifacts:
           path: /tmp/test-results
