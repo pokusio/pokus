@@ -35,7 +35,8 @@ services:
   build_hugo:
     hostname: 'pokusio.io'
     container_name: "pokusio.io"
-    image: docker.pegasusio.io/pokus/pokus:0.0.1
+    # image: docker.pegasusio.io/pokus/pokus:0.0.1
+    image: quay.io/pok-us-io/pokus-api:${POKUS_VERSION}
     build:
       context: oci/
       args:

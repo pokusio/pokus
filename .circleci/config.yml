@@ -70,19 +70,22 @@ jobs:
       - deploy:
           name: Build and push Docker image
           command: |
-            POKUS_VERSION=6.57.45
-            POKUS_VERSION=3.1.2
-            GIT_COMMIT_ID=${POKUS_VERSION}
-            GIT_COMMIT_ID=${CIRCLE_BUILD_NUM}
-            TAG="0.0.03-apim-${GIT_COMMIT_ID}"
-            pwd
-            ls -allh
             QUAY_BOT_USERNAME=$(secrethub read pok-us-io/api/staging/docker/quay/botusername)
             QUAY_BOT_SECRET=$(secrethub read pok-us-io/api/staging/docker/quay/botoken)
-            echo "QUAY_BOT_USERNAME=[${QUAY_BOT_USERNAME}]"
-            echo "QUAY_BOT_SECRET=[${QUAY_BOT_SECRET}]"
-            docker build --no-cache -t "quay.io/pok-us-io/apim-gateway:${TAG}" -f docker/Dockerfile docker/ --build-arg POKUS_VERSION=${POKUS_VERSION}
             docker login -u="${QUAY_BOT_USERNAME}" -p="${QUAY_BOT_SECRET}" quay.io
+
+            cd containers/
+            source .deployment.env
+            cp oci/jinja2.Dockerfile oci/Dockerfile
+            sed -i "s#BUMBLEBEE_HOME_INSIDE_CONTAINER_JINJA2_VAR#$BUMBLEBEE_HOME_INSIDE_CONTAINER#g" oci/Dockerfile
+            # docker-compose up -d init_projet_hugo
+            # docker-compose up -d --build --force-recreate init_hugo_resume && docker-compose logs -f init_hugo_resume
+            docker-compose config
+            docker-compose build
+
+            TAG="${POKUS_VERSION}"
+            pwd
+            ls -allh
             docker push "quay.io/pok-us-io/apim-gateway:${TAG}"
             pwd
 
