@@ -282,3 +282,384 @@ jbl@poste-devops-jbl-16gbram:~/apicurio-studio/distro/docker-compose$ while read
   "IPAddress": "86.247.169.244"
 }
 ```
+interesting enough : every time the secrethub read a secret, it readds its value, and its version number... really execllent
+* Alright, I see 3 IP Addresses here, let's fin out who those are :
+  * `86.247.169.244` : you will check for yourself below that the `ẁhois` command reveals it belongs to `France Telecom`, Ok, this my French ISP box. It's me with the Secrethub CLI from my PC.
+  * there are three others, certainly belonging to Circle CI infrastructure, `3.95.220.70`, `54.210.134.154`, and `184.72.108.119`, and they are clearly from an AWS infra on EC2, 'd say a kubernetes cluster, perhaps `AWS EKS` (Is `Circle CI` running on AWS EKS ?)
+  * Now the whois :
+
+```bash
+jbl@poste-devops-jbl-16gbram:~/apicurio-studio/distro/docker-compose$ whois 3.89.249.61
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       3.0.0.0 - 3.127.255.255
+CIDR:           3.0.0.0/9
+NetName:        AT-88-Z
+NetHandle:      NET-3-0-0-0-1
+Parent:         NET3 (NET-3-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:
+Organization:   Amazon Technologies Inc. (AT-88-Z)
+RegDate:        2017-12-20
+Updated:        2018-03-30
+Comment:        -----BEGIN CERTIFICATE-----MIIDXTCCAkWgAwIBAgIJAP8/PKf0V0YgMA0GCSqGSIb3DQEBCwUAMEUxCzAJBgNVBAYTAkFVMRMwEQYDVQQIDApTb21lLVN0YXRlMSEwHwYDVQQKDBhJbnRlcm5ldCBXaWRnaXRzIFB0eSBMdGQwHhcNMTkwNjA3MTIwOTE0WhcNMjAwNjA2MTIwOTE0WjBFMQswCQYDVQQGEwJBVTETMBEGA1UECAwKU29tZS1TdGF0ZTEhMB8GA1UECgwYSW50ZXJuZXQgV2lkZ2l0cyBQdHkgTHRkMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzaDSbngAXoQh51PFKIjK0c9yqCz6Dr+71QfBIYW5yYGZH2jy1FVCEhYeISnvtPCdOYeyvgukDIlbUI9k5uCjJfllPOYV27WHdVCosmGEW5X3/hEofbIfUOSNkptayKpxcXUX+oZWOR4CY6d5Dg9Lz+INClH+3tkIq1yxpzaY0gS5wLLj/4x3Mc/VJ6HAE+qA5fgKILvwycDBjF57F7zpbsYsqhYuipYYa1tRNiyxl0dAah1SEH5FuzR2YIAU/JK+orBS7YsTxMkaufosKQIhCbHE3C+KjEY1AVBwZlCzvfFKeiU2Gb81PPM3reHDH/H7EibjxemDuIVMom3rFETktQIDAQABo1AwTjAdBgNVHQ4EFgQU7ae6kVQwhI35+wq2z63EIWKhrRAwHwYDVR0jBBgwFoAU7ae6kVQwhI35+wq2z63EIWKhrRAwDAYDVR0TBAUwAwEB/zANBgkqhkiG9w0BAQsFAAOCAQEAMU9Hae07KXMlqrkBuJYGTS4oXy6lB9N12OVJjfgapwxsQiYjn9YDJqEJv/V8IIuxdHGE6z1tRxVfygWb+OE8cBkgE2jJZ2RqK5990MqwIFrfnBBR/PhureveIZjQPS1CjOQGtPoIXiHqst8EUUx0O4AJ41VXVhvjmzDHv4VeGySlFCcDof1ydU1fk9Ejb61gW+VzEgvylvSXEUFwK1U1jNWBZr06B2RlpK6fJdeGHRPpcp1A0bOUiOpXiTYzLscKJW/SSM8/SP5vptE6pgPHiRRvZWGRoAY2ZDiuJKI+MCN1IZnf/8fgMug5xD7BbnPrhCR4UOVqzHI60bJQY5BBIg==-----END CERTIFICATE-----
+Ref:            https://rdap.arin.net/registry/ip/3.0.0.0
+
+
+
+OrgName:        Amazon Technologies Inc.
+OrgId:          AT-88-Z
+Address:        410 Terry Ave N.
+City:           Seattle
+StateProv:      WA
+PostalCode:     98109
+Country:        US
+RegDate:        2011-12-08
+Updated:        2020-03-31
+Comment:        All abuse reports MUST include:
+Comment:        * src IP
+Comment:        * dest IP (your IP)
+Comment:        * dest port
+Comment:        * Accurate date/timestamp and timezone of activity
+Comment:        * Intensity/frequency (short log extracts)
+Comment:        * Your contact details (phone and email) Without these we will be unable to identify the correct owner of the IP address at that point in time.
+Ref:            https://rdap.arin.net/registry/entity/AT-88-Z
+
+
+OrgRoutingHandle: ADR29-ARIN
+OrgRoutingName:   AWS Dogfish Routing
+OrgRoutingPhone:  +1-206-266-4064
+OrgRoutingEmail:  aws-dogfish-routing-poc@amazon.com
+OrgRoutingRef:    https://rdap.arin.net/registry/entity/ADR29-ARIN
+
+OrgRoutingHandle: IPROU3-ARIN
+OrgRoutingName:   IP Routing
+OrgRoutingPhone:  +1-206-266-4064
+OrgRoutingEmail:  aws-routing-poc@amazon.com
+OrgRoutingRef:    https://rdap.arin.net/registry/entity/IPROU3-ARIN
+
+OrgTechHandle: ANO24-ARIN
+OrgTechName:   Amazon EC2 Network Operations
+OrgTechPhone:  +1-206-266-4064
+OrgTechEmail:  amzn-noc-contact@amazon.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/ANO24-ARIN
+
+OrgAbuseHandle: AEA8-ARIN
+OrgAbuseName:   Amazon EC2 Abuse
+OrgAbusePhone:  +1-206-266-4064
+OrgAbuseEmail:  abuse@amazonaws.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/AEA8-ARIN
+
+OrgNOCHandle: AANO1-ARIN
+OrgNOCName:   Amazon AWS Network Operations
+OrgNOCPhone:  +1-206-266-4064
+OrgNOCEmail:  amzn-noc-contact@amazon.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/AANO1-ARIN
+
+# end
+
+
+# start
+
+NetRange:       3.80.0.0 - 3.95.255.255
+CIDR:           3.80.0.0/12
+NetName:        AMAZON-IAD
+NetHandle:      NET-3-80-0-0-1
+Parent:         AT-88-Z (NET-3-0-0-0-1)
+NetType:        Reallocated
+OriginAS:       AS16509, AS14618
+Organization:   Amazon Data Services NoVa (ADSN-1)
+RegDate:        2018-08-22
+Updated:        2018-08-22
+Ref:            https://rdap.arin.net/registry/ip/3.80.0.0
+
+
+
+OrgName:        Amazon Data Services NoVa
+OrgId:          ADSN-1
+Address:        13200 Woodland Park Road
+City:           Herndon
+StateProv:      VA
+PostalCode:     20171
+Country:        US
+RegDate:        2018-04-25
+Updated:        2019-08-02
+Ref:            https://rdap.arin.net/registry/entity/ADSN-1
+
+
+OrgNOCHandle: AANO1-ARIN
+OrgNOCName:   Amazon AWS Network Operations
+OrgNOCPhone:  +1-206-266-4064
+OrgNOCEmail:  amzn-noc-contact@amazon.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/AANO1-ARIN
+
+OrgAbuseHandle: AEA8-ARIN
+OrgAbuseName:   Amazon EC2 Abuse
+OrgAbusePhone:  +1-206-266-4064
+OrgAbuseEmail:  abuse@amazonaws.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/AEA8-ARIN
+
+OrgTechHandle: ANO24-ARIN
+OrgTechName:   Amazon EC2 Network Operations
+OrgTechPhone:  +1-206-266-4064
+OrgTechEmail:  amzn-noc-contact@amazon.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/ANO24-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+jbl@poste-devops-jbl-16gbram:~/apicurio-studio/distro/docker-compose$ whois 86.247.169.244
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '86.247.168.0 - 86.247.175.255'
+
+% Abuse contact for '86.247.168.0 - 86.247.175.255' is 'gestionip.ft@orange.com'
+
+inetnum:        86.247.168.0 - 86.247.175.255
+netname:        IP2000-ADSL-BAS
+descr:          POP Montsouris Bloc 2
+country:        FR
+admin-c:        WITR1-RIPE
+tech-c:         WITR1-RIPE
+status:         ASSIGNED PA
+remarks:        for hacking, spamming or security problems send mail to
+remarks:        abuse@orange.fr
+mnt-by:         FT-BRX
+created:        2015-06-26T14:06:21Z
+last-modified:  2015-06-26T14:06:21Z
+source:         RIPE
+
+role:           Wanadoo France Technical Role
+address:        FRANCE TELECOM/SCR
+address:        48 rue Camille Desmoulins
+address:        92791 ISSY LES MOULINEAUX CEDEX 9
+address:        FR
+phone:          +33 1 58 88 50 00
+abuse-mailbox:  abuse@orange.fr
+admin-c:        BRX1-RIPE
+tech-c:         BRX1-RIPE
+nic-hdl:        WITR1-RIPE
+mnt-by:         FT-BRX
+created:        2001-12-04T17:57:08Z
+last-modified:  2013-07-16T14:09:50Z
+source:         RIPE # Filtered
+
+% Information related to '86.247.0.0/16AS3215'
+
+route:          86.247.0.0/16
+descr:          France Telecom IP2000-ADSL-BAS
+origin:         AS3215
+mnt-by:         FT-BRX
+created:        2018-08-16T13:40:00Z
+last-modified:  2018-08-16T13:40:00Z
+source:         RIPE
+
+% This query was served by the RIPE Database Query Service version 1.97.2 (ANGUS)
+
+
+jbl@poste-devops-jbl-16gbram:~/apicurio-studio/distro/docker-compose$ whois 184.72.108.119
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+
+
+# start
+
+NetRange:       184.72.0.0 - 184.73.255.255
+CIDR:           184.72.0.0/15
+NetName:        AMAZON-EC2-7
+NetHandle:      NET-184-72-0-0-1
+Parent:         NET184 (NET-184-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:
+Organization:   Amazon.com, Inc. (AMAZO-4)
+RegDate:        2010-01-26
+Updated:        2014-09-03
+Comment:        The activity you have detected originates from a
+Comment:        dynamic hosting environment.
+Comment:        For fastest response, please submit abuse reports at
+Comment:        http://aws-portal.amazon.com/gp/aws/html-forms-controller/contactus/AWSAbuse
+Comment:        For more information regarding EC2 see:
+Comment:        http://ec2.amazonaws.com/
+Comment:        All reports MUST include:
+Comment:        * src IP
+Comment:        * dest IP (your IP)
+Comment:        * dest port
+Comment:        * Accurate date/timestamp and timezone of activity
+Comment:        * Intensity/frequency (short log extracts)
+Comment:        * Your contact details (phone and email)
+Comment:        Without these we will be unable to identify
+Comment:        the correct owner of the IP address at that
+Comment:        point in time.
+Ref:            https://rdap.arin.net/registry/ip/184.72.0.0
+
+
+
+OrgName:        Amazon.com, Inc.
+OrgId:          AMAZO-4
+Address:        Amazon Web Services, Inc.
+Address:        P.O. Box 81226
+City:           Seattle
+StateProv:      WA
+PostalCode:     98108-1226
+Country:        US
+RegDate:        2005-09-29
+Updated:        2020-04-07
+Comment:        For details of this service please see
+Comment:        http://ec2.amazonaws.com
+Ref:            https://rdap.arin.net/registry/entity/AMAZO-4
+
+
+OrgAbuseHandle: AEA8-ARIN
+OrgAbuseName:   Amazon EC2 Abuse
+OrgAbusePhone:  +1-206-266-4064
+OrgAbuseEmail:  abuse@amazonaws.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/AEA8-ARIN
+
+OrgRoutingHandle: ADR29-ARIN
+OrgRoutingName:   AWS Dogfish Routing
+OrgRoutingPhone:  +1-206-266-4064
+OrgRoutingEmail:  aws-dogfish-routing-poc@amazon.com
+OrgRoutingRef:    https://rdap.arin.net/registry/entity/ADR29-ARIN
+
+OrgNOCHandle: AANO1-ARIN
+OrgNOCName:   Amazon AWS Network Operations
+OrgNOCPhone:  +1-206-266-4064
+OrgNOCEmail:  amzn-noc-contact@amazon.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/AANO1-ARIN
+
+OrgRoutingHandle: IPROU3-ARIN
+OrgRoutingName:   IP Routing
+OrgRoutingPhone:  +1-206-266-4064
+OrgRoutingEmail:  aws-routing-poc@amazon.com
+OrgRoutingRef:    https://rdap.arin.net/registry/entity/IPROU3-ARIN
+
+OrgTechHandle: ANO24-ARIN
+OrgTechName:   Amazon EC2 Network Operations
+OrgTechPhone:  +1-206-266-4064
+OrgTechEmail:  amzn-noc-contact@amazon.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/ANO24-ARIN
+
+RTechHandle: ANO24-ARIN
+RTechName:   Amazon EC2 Network Operations
+RTechPhone:  +1-206-266-4064
+RTechEmail:  amzn-noc-contact@amazon.com
+RTechRef:    https://rdap.arin.net/registry/entity/ANO24-ARIN
+
+RAbuseHandle: AEA8-ARIN
+RAbuseName:   Amazon EC2 Abuse
+RAbusePhone:  +1-206-266-4064
+RAbuseEmail:  abuse@amazonaws.com
+RAbuseRef:    https://rdap.arin.net/registry/entity/AEA8-ARIN
+
+RNOCHandle: ANO24-ARIN
+RNOCName:   Amazon EC2 Network Operations
+RNOCPhone:  +1-206-266-4064
+RNOCEmail:  amzn-noc-contact@amazon.com
+RNOCRef:    https://rdap.arin.net/registry/entity/ANO24-ARIN
+
+# end
+
+
+# start
+
+NetRange:       184.72.96.0 - 184.72.127.255
+CIDR:           184.72.96.0/19
+NetName:        AMAZON-IAD
+NetHandle:      NET-184-72-96-0-1
+Parent:         AMAZON-EC2-7 (NET-184-72-0-0-1)
+NetType:        Reallocated
+OriginAS:
+Organization:   Amazon Data Services NoVa (ADSN-1)
+RegDate:        2020-04-16
+Updated:        2020-04-16
+Ref:            https://rdap.arin.net/registry/ip/184.72.96.0
+
+
+
+OrgName:        Amazon Data Services NoVa
+OrgId:          ADSN-1
+Address:        13200 Woodland Park Road
+City:           Herndon
+StateProv:      VA
+PostalCode:     20171
+Country:        US
+RegDate:        2018-04-25
+Updated:        2019-08-02
+Ref:            https://rdap.arin.net/registry/entity/ADSN-1
+
+
+OrgTechHandle: ANO24-ARIN
+OrgTechName:   Amazon EC2 Network Operations
+OrgTechPhone:  +1-206-266-4064
+OrgTechEmail:  amzn-noc-contact@amazon.com
+OrgTechRef:    https://rdap.arin.net/registry/entity/ANO24-ARIN
+
+OrgAbuseHandle: AEA8-ARIN
+OrgAbuseName:   Amazon EC2 Abuse
+OrgAbusePhone:  +1-206-266-4064
+OrgAbuseEmail:  abuse@amazonaws.com
+OrgAbuseRef:    https://rdap.arin.net/registry/entity/AEA8-ARIN
+
+OrgNOCHandle: AANO1-ARIN
+OrgNOCName:   Amazon AWS Network Operations
+OrgNOCPhone:  +1-206-266-4064
+OrgNOCEmail:  amzn-noc-contact@amazon.com
+OrgNOCRef:    https://rdap.arin.net/registry/entity/AANO1-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/resources/registry/whois/tou/
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/resources/registry/whois/inaccuracy_reporting/
+#
+# Copyright 1997-2020, American Registry for Internet Numbers, Ltd.
+#
+
+jbl@poste-devops-jbl-16gbram:~/apicurio-studio/distro/docker-compose$
+
+```
