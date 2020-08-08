@@ -7,7 +7,7 @@ jobs:
     docker:
       # using custom image, see [./.circleci/docker/primary/Dockerfile]
       - image: quay.io/pok-us-io/pokus_api_build:0.0.2
-        # if docker image repository required docker login and permissions to docker pull 
+        # if docker image repository required docker login and permissions to docker pull
         # auth:
           # username: $POKUS_BOT_QUAY_USERNAME
           # password: $POKUS_BOT_QUAY_TOKEN
@@ -29,8 +29,6 @@ jobs:
             npm install
             tsoa routes
             npm run build
-
-
       - store_artifacts:
           path: /tmp/test-results
           destination: raw-test-output
