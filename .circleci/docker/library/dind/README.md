@@ -14,6 +14,6 @@ git clone	git@gitlab.com:second-bureau/pegasus/pokus/pokus.git pokustee/
 cd pokustee/
 git checkout feature/swagger_pipeline
 docker login -u="$QUAY_BOT_USERNAME" -p="$QUAY_BOT_SECRET" quay.io
-docker build --no-cache -t "quay.io/pok-us-io/pokus_api_oci_build:${DTAG}" -f .circleci/docker/library/dind/Dockerfile ./.circleci/docker/primary/dind/
+docker build --no-cache -t "quay.io/pok-us-io/pokus_api_oci_build:${DTAG}" -f .circleci/docker/library/dind/Dockerfile ./.circleci/docker/library/dind/
 docker push "quay.io/pok-us-io/pokus_api_oci_build:${DTAG}"
 ```
