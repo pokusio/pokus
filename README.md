@@ -6,7 +6,17 @@ https://pok-us.io/ _(domain name bought on 22/02/2020 )_
 
 [![Pokus!A kind of magic!](https://circleci.com/gh/pokusio/pokus.svg?style=svg)](https://circleci.com/gh/pokusio/pokus)
 
+<!--
+
+Could not find how to deal with specific branches
+
+[![Pokus master branch](https://circleci.com/gh/pokusio/pokus/tree/master.svg?style=svg)](vvv)
+
 [![Pokus!A kind of magic! (branch feature/swagger_pipeline)](https://circleci.com/gh/pokusio/pokus/tree/feature/swagger_pipeline.svg?style=svg)](https://circleci.com/gh/pokusio/pokus/tree/feature/swagger_pipeline)
+
+
+-->
+
 
 
 
