@@ -24,9 +24,9 @@ export class GitRepoService {
     /// build the Regexp String to exclude paths
     // Split process.env.POKUS_GITOPS to backslash all slash characters
     // this first one works to exclude
-    // const tree2 = dtree(process.env.POKUS_GITOPS, { exclude: /\/home\/jibl\/pokus\.dev\/pokus_gitops\/\.git\// });
+    // const tree2 = dtree(process.env.POKUS_GITOPS, { exclude: /\/home\/jbl\/pokus\.dev\/pokus_gitops\/\.git\// });
     // const tree2 = dtree(process.env.POKUS_GITOPS, { exclude: new RegExp('/' + process.env.POKUS_GITOPS + ' \/\.git\//') });
-    // const tree3 = dtree(process.env.POKUS_GITOPS, { exclude: new RegExp('/\/home\/jibl\/pokus\.dev\/pokus_gitops\/\.git\//', 'g') });
+    // const tree3 = dtree(process.env.POKUS_GITOPS, { exclude: new RegExp('/\/home\/jbl\/pokus\.dev\/pokus_gitops\/\.git\//', 'g') });
 
     /// yes ! finally found a way without having to use any variable or process env var
     const tree = dtree(process.env.POKUS_GITOPS, { exclude: /[\/|a-z|A-Z|0-9]+\/\.git\/[\/|a-z|A-Z|0-9]+/ });

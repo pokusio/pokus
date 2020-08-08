@@ -78,8 +78,8 @@ jobs:
             TAG="0.0.03-apim-${GIT_COMMIT_ID}"
             pwd
             ls -allh
-            QUAY_BOT_USERNAME=$(secrethub read pok-us-io/api/staging/docker/quay/botuser/username)
-            QUAY_BOT_SECRET=$(secrethub read pok-us-io/api/staging/docker/quay/botoken/token)
+            QUAY_BOT_USERNAME=$(secrethub read pok-us-io/api/staging/docker/quay/botusername)
+            QUAY_BOT_SECRET=$(secrethub read pok-us-io/api/staging/docker/quay/botoken)
             echo "QUAY_BOT_USERNAME=[${QUAY_BOT_USERNAME}]"
             echo "QUAY_BOT_SECRET=[${QUAY_BOT_SECRET}]"
             docker build --no-cache -t "quay.io/pok-us-io/apim-gateway:${TAG}" -f docker/Dockerfile docker/ --build-arg POKUS_VERSION=${POKUS_VERSION}
@@ -92,6 +92,5 @@ workflows:
   build_and_publish:
     jobs:
       - build:
-          context: "pokus-dev"
       - publish
-          # context: pok-us-io
+          context: "pokus-dev"
