@@ -4,7 +4,6 @@ orbs:
 
 jobs:
   build:
-    context: pokus-dev
     docker:
       # using custom image, see [./.circleci/docker/primary/Dockerfile]
       - image: quay.io/pok-us-io/pokus_api_build:0.0.2
@@ -96,5 +95,6 @@ workflows:
   build_and_publish:
     jobs:
       - build
+          context: pokus-dev
       - publish
           # context: pok-us-io
