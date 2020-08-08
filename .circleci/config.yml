@@ -95,6 +95,6 @@ workflows:
   build_and_publish:
     jobs:
       - build
-          context: pokus-dev
+          context: "pokus-dev"
       - publish
           # context: pok-us-io
